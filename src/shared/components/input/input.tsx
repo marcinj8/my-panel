@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { UseInput } from './inputData';
 
 interface InputProps {
   value: string | number;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  name: string;
+  onInput: Function;
   label?: string;
+  isValid?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({ value, onChange, label = null }) => {
+export const Input: React.FC<InputProps> = ({
+  value,
+  name,
+  onInput,
+  label = null,
+  isValid,
+}) => {
+  const { inputState, onInputChange, onInputTouch } = UseInput(value, isValid);
+
+  useEffect(() => {
+    onInput(name, inputState.value, inputState.isValid);
+  }, [name, inputState.value, inputState.isValid, onInput]);
   return (
     <>
       {label && <label>{label}</label>}
-      <input onChange={onChange} value={value} />
+      <input
+        value={inputState.value}
+        onChange={onInputChange}
+        onBlur={onInputTouch}
+      />
     </>
   );
 };

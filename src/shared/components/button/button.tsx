@@ -11,6 +11,5 @@ export const Button: React.FC<ButtonProps> = ({
   clicked,
   type = 'primary',
 }) => {
-  console.log(type);
   return <button onClick={clicked}>{name}</button>;
 };
