@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { UserData } from '../shared/models';
 import userReducer from './loginSlice/reducer';
 
 export const store = configureStore({
@@ -13,5 +14,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
-  Action<string>
+  Action<string | UserData>
 >;
