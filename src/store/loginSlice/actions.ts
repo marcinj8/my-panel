@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { UserData } from '../../shared/models';
 import { AppThunk, store } from '../store';
-import { loading, succes, error } from './reducer';
+import { loading, succes, error, logout } from './reducer';
 const config: AxiosRequestConfig = {
   headers: {
     'Content-Type': 'application/json',
@@ -11,10 +11,20 @@ const config: AxiosRequestConfig = {
   },
 };
 
-export const loginUser = (
-  e: React.MouseEvent<HTMLButtonElement>,
-  userData: UserData
-) => {
+export const checkIsLoggedin = (dispatch: Function) => {
+  const userData = localStorage.getItem('userData');
+  console.log(userData);
+  if (userData) {
+    return dispatch(loginUser(JSON.parse(userData)));
+  }
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem('userData');
+  return logout()
+};
+
+export const loginUser = (userData: UserData) => {
   return async (dispatch: any) => {
     dispatch(loading());
     const backendLink = `http://localhost:5000/api/user/login`;
@@ -22,6 +32,7 @@ export const loginUser = (
       .post(backendLink, { userData: JSON.stringify(userData) }, config)
       .then((res: AxiosRequestConfig) => {
         console.log(res);
+        localStorage.setItem('userData', JSON.stringify(res.data.userData));
         return dispatch(
           succes({ mail: res.data.userData.mail, name: res.data.userData.name })
         );
@@ -33,4 +44,4 @@ export const loginUser = (
   };
 };
 
-// store.dispatch(loginUser);
+store.dispatch(logoutUser);

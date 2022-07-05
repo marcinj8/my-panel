@@ -26,10 +26,14 @@ export const userDataSlice = createSlice({
     error: (state, action: PayloadAction<ErrorModel>) => {
       state.status = 'error';
     },
+    logout: (state) => {
+      state.status = 'init';
+      state.userData = null;
+    }
   },
 });
 
-export const { succes, loading, error } = userDataSlice.actions;
+export const { succes, loading, error, logout } = userDataSlice.actions;
 
 export const user = (state: RootState) => state.userData;
 

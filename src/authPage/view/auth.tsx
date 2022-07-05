@@ -10,12 +10,11 @@ export const Auth = () => {
   console.log(state);
   const fn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // console.log(formState);
     const userData = {
       mail: formState.inputs.mail.value,
       password: formState.inputs.password.value,
     };
-    dispatch(loginUser(e, userData));
+    dispatch(loginUser(userData));
   };
 
   const { formState, onInput } = UseFrom({
