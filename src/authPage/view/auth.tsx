@@ -1,12 +1,20 @@
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
 import { Button, Input } from '../../shared/components';
 import { UseFrom } from '../../shared/hooks/form-hook';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginUser } from '../../store/loginSlice/actions';
+
+import {
+  StyledAuthForm,
+  StyledAuthTitle,
+  StyledAuthView,
+} from '../style/auth.style';
 
 export const Auth = () => {
   const state = useAppSelector((state) => state.userData);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  
   console.log(state);
   const fn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -25,13 +33,15 @@ export const Auth = () => {
   });
 
   return (
-    <div>
-      <h3>auth</h3>
-      <form>
+    <StyledAuthView>
+      <header>
+        <StyledAuthTitle>auth</StyledAuthTitle>
+      </header>
+      <StyledAuthForm>
         <Input value='' name='mail' onInput={onInput} />
         <Input value='' name='password' onInput={onInput} />
         <Button name='login' clicked={fn} />
-      </form>
-    </div>
+      </StyledAuthForm>
+    </StyledAuthView>
   );
 };

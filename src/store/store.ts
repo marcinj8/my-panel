@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { UserData } from '../shared/models';
 import userReducer from './loginSlice/reducer';
+import themeReducer from './themeSlice/reducer';
 
 export const store = configureStore({
   reducer: {
     userData: userReducer,
+    themeData: themeReducer,
   },
 });
 

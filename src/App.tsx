@@ -1,14 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { ThemeProvider } from 'styled-components';
 
 import { Auth } from './authPage';
 
-import './App.css';
-import { useAppDispatch, useAppSelector } from './store/hooks';
 import { checkIsLoggedin, logoutUser } from './store/loginSlice/actions';
+
+import './App.css';
 
 function App() {
   const isLoggedin = useAppSelector((state) => state.userData.userData);
+  const theme = useAppSelector((state) => state.themeData);
   const dispatch = useAppDispatch();
 
   const routers = useMemo(() => {
@@ -40,7 +43,9 @@ function App() {
 
   return (
     <div className='App'>
-      <BrowserRouter>{routers}</BrowserRouter>
+      <ThemeProvider theme={theme.themes[theme.currentTheme]}>
+        <BrowserRouter>{routers}</BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }

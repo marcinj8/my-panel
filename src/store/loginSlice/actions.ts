@@ -16,12 +16,14 @@ export const checkIsLoggedin = (dispatch: Function) => {
   console.log(userData);
   if (userData) {
     return dispatch(loginUser(JSON.parse(userData)));
+  } else {
+    return logout();
   }
 };
 
 export const logoutUser = () => {
   localStorage.removeItem('userData');
-  return logout()
+  return logout();
 };
 
 export const loginUser = (userData: UserData) => {
