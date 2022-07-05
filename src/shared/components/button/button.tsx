@@ -11,5 +11,10 @@ export const Button: React.FC<ButtonProps> = ({
   clicked,
   type = 'primary',
 }) => {
-  return <button onClick={clicked}>{name}</button>;
+  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) =>{
+    e.preventDefault();
+    clicked(e)
+  }
+  
+  return <button onClick={clickHandler}>{name}</button>;
 };
