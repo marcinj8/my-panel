@@ -1,34 +1,51 @@
 import { useCallback, useReducer } from 'react';
 import { InputState } from '../components/input/inputData';
 
-interface FormState {
-  inputs: any;
-  isFormValid: boolean;
-}
-
-interface FormActions {
-  type: string;
-  name: string;
-  value: string | number;
-  isValid: boolean;
-}
-
 interface InputsData {
   [key: string]: Omit<InputState, 'isTouched'>;
 }
 
-const formReducer = (state: FormState, action: FormActions) => {
+export interface FormState {
+  inputs: InputsData;
+  isFormValid: boolean;
+}
+
+type Action =
+  | { type: 'SET_DATA'; inputs: InputsData; isFormValid: boolean }
+  | {
+      type: 'ON_INPUT_CHANGE';
+      value: string | number;
+      name: string;
+      isValid: boolean;
+    };
+
+const onInputChange = (
+  state: FormState,
+  name: string,
+  value: any, //to solve, expected string | number
+  isValid: boolean
+) => {
+  return {
+    ...state,
+    inputs: {
+      ...state.inputs,
+      [name]: {
+        value,
+        isValid,
+      },
+    },
+  };
+};
+
+const formReducer = (state: FormState, action: Action): FormState => {
   switch (action.type) {
     case 'ON_INPUT_CHANGE':
+      return onInputChange(state, action.name, action.value, action.isValid);
+    case 'SET_DATA':
       return {
         ...state,
-        inputs: {
-          ...state.inputs,
-          [action.name]: {
-            value: action.value,
-            isValid: action.isValid,
-          },
-        },
+        inputs: action.inputs,
+        isFormValid: action.isFormValid,
       };
     default:
       throw new Error('action type not found');
@@ -54,5 +71,16 @@ export const UseFrom = (inputs: InputsData, isFormValid?: boolean) => {
     []
   );
 
-  return { formState, onInput };
+  const setFormData = useCallback(
+    (inputsData: InputsData, isFormValid: boolean) => {
+      dispatch({
+        type: 'SET_DATA',
+        inputs: inputsData,
+        isFormValid,
+      });
+    },
+    []
+  );
+
+  return { formState, setFormData, onInput };
 };

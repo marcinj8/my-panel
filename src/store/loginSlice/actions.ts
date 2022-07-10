@@ -13,7 +13,6 @@ const config: AxiosRequestConfig = {
 
 export const checkIsLoggedin = (dispatch: Function) => {
   const userData = localStorage.getItem('userData');
-  console.log(userData);
   if (userData) {
     return dispatch(loginUser(JSON.parse(userData)));
   } else {

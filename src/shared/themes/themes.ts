@@ -11,6 +11,12 @@ export const themes = {
       secondary: 'silver',
       danger: 'pink',
     },
+    btBg: {
+      danger: 'pink',
+      primary: 'white',
+      secondary: 'white',
+      confirm: 'lightgreen',
+    },
     color: {
       main: 'black',
       secondary: 'white',
@@ -32,6 +38,12 @@ export const themes = {
       main: 'gray',
       secondary: 'silver',
       danger: 'pink',
+    },
+    btBg: {
+      danger: 'pink',
+      primary: 'gray',
+      secondary: 'white',
+      confirm: 'lightgreen',
     },
     color: {
       main: 'white',

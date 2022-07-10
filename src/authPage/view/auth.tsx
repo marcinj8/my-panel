@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '../../shared/components';
 
 import { AuthForm } from '../components/authForm';
 
 import { StyledAuthTitle, StyledAuthView } from '../style/auth.style';
 
 export const Auth = () => {
-  const [isLoginMode, setIsLoginMode] = useState<boolean>(false);
+  const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
 
   return (
     <StyledAuthView>
