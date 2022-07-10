@@ -1,5 +1,7 @@
 export interface UserData {
-  mail: string;
+  email: string;
   name?: string;
   password?: string;
+  cities?: string[];
+  currency?: string[];
 }

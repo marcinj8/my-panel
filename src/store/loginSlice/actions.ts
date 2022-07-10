@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { UserData } from '../../shared/models';
-import { AppThunk, store } from '../store';
+// import { AppThunk, store } from '../store';
 import { loading, succes, error, logout } from './reducer';
 const config: AxiosRequestConfig = {
   headers: {
@@ -35,7 +35,10 @@ export const loginUser = (userData: UserData) => {
         console.log(res);
         localStorage.setItem('userData', JSON.stringify(res.data.userData));
         return dispatch(
-          succes({ mail: res.data.userData.mail, name: res.data.userData.name })
+          succes({
+            email: res.data.userData.email,
+            name: res.data.userData.name,
+          })
         );
       })
       .catch((err: AxiosError) => {
@@ -45,4 +48,4 @@ export const loginUser = (userData: UserData) => {
   };
 };
 
-store.dispatch(logoutUser);
+// store.dispatch(checkIsLoggedin);

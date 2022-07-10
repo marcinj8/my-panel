@@ -11,6 +11,7 @@ type ButtonType = 'danger' | 'primary' | 'secondary' | 'confirm';
 interface ButtonProps {
   name: string;
   clicked: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
   variant?: 'primary' | 'inline';
   type?: ButtonType;
 }
@@ -18,10 +19,14 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   name,
   clicked,
+  disabled = false,
   variant = 'primary',
   type = 'primary',
 }) => {
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if(disabled) {
+      return null
+    }
     e.preventDefault();
     clicked(e);
   };
@@ -38,7 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
   }, [variant]);
 
   return (
-    <Component btnType={type} onClick={clickHandler}>
+    <Component btnType={type} disabled={disabled} onClick={clickHandler}>
       {name}
     </Component>
   );

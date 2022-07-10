@@ -25,6 +25,18 @@ const onInputChange = (
   value: any, //to solve, expected string | number
   isValid: boolean
 ) => {
+  let isFormValid = true;
+  for (const input in state.inputs) {
+    if (!state.inputs[input]) {
+      continue;
+    }
+    if (input === name) {
+      isFormValid = isFormValid && isValid;
+    } else {
+      isFormValid = isFormValid && state.inputs[input].isValid;
+    }
+  }
+
   return {
     ...state,
     inputs: {
@@ -34,6 +46,7 @@ const onInputChange = (
         isValid,
       },
     },
+    isFormValid: isFormValid,
   };
 };
 

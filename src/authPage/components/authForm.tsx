@@ -8,6 +8,11 @@ import { loginUser } from '../../store/loginSlice/actions';
 
 import { StyledAuthForm } from '../style/auth.style';
 import { switchAuthMode } from '../data/authData';
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from '../../shared/components/input/validators';
 
 interface AuthFromData {
   isLoginMode: boolean;
@@ -22,11 +27,12 @@ export const AuthForm: React.FC<AuthFromData> = ({
 
   const onAuthHandler = () => {
     const userData = {
-      mail: formState.inputs.mail.value.toString(),
+      email: formState.inputs.email.value.toString(),
       password: formState.inputs.password.value.toString(),
     };
     dispatch(loginUser(userData));
   };
+
   const { formState, onInput, setFormData } = UseFrom(
     {
       email: {
@@ -40,7 +46,6 @@ export const AuthForm: React.FC<AuthFromData> = ({
     },
     false
   );
-  console.log(formState.inputs);
 
   useEffect(() => {
     switchAuthMode(isLoginMode, setFormData, formState);
@@ -49,12 +54,38 @@ export const AuthForm: React.FC<AuthFromData> = ({
   return (
     <StyledAuthForm>
       {!isLoginMode && (
-        <Input label='name' value='' name='name' onInput={onInput} />
+        <Input
+          validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
+          label='name'
+          value=''
+          type='text'
+          name='name'
+          onInput={onInput}
+        />
       )}
-      <Input label='mail' value='' name='mail' onInput={onInput} />
-      <Input label='password' value='' name='password' onInput={onInput} />
-      <Button type='confirm' name='login' clicked={onAuthHandler} />
-      <h5>{!isLoginMode ? "you have account?" : "you don't have account?"}</h5>
+      <Input
+        validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
+        label='email'
+        value=''
+        type='text'
+        name='email'
+        onInput={onInput}
+      />
+      <Input
+        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
+        label='password'
+        value=''
+        type='password'
+        name='password'
+        onInput={onInput}
+      />
+      <Button
+        disabled={!formState.isFormValid}
+        type='confirm'
+        name='login'
+        clicked={onAuthHandler}
+      />
+      <h5>{!isLoginMode ? 'you have account?' : "you don't have account?"}</h5>
       <Button
         variant='inline'
         name={`switch to ${isLoginMode ? 'register' : 'login'}`}

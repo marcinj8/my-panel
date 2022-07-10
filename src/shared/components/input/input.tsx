@@ -3,13 +3,16 @@ import React, { useEffect } from 'react';
 import { UseInput } from './inputData';
 
 import { StyledInput, StyledInputBox, StyledInputLabel } from './input.style';
+import { Validator } from './validators';
 
-type FlexDirection = 'row' | 'column'
+type FlexDirection = 'row' | 'column';
 
 interface InputProps {
   value: string | number;
   name: string;
   onInput: Function;
+  type?: string;
+  validators?: Validator[];
   placeholder?: string;
   label?: string;
   isValid?: boolean;
@@ -20,9 +23,11 @@ export const Input: React.FC<InputProps> = ({
   value,
   name,
   onInput,
+  type = 'text',
   label = null,
   placeholder,
   isValid,
+  validators = [],
   flexDirection = 'column',
 }) => {
   const { inputState, onInputChange, onInputTouch } = UseInput(value, isValid);
@@ -30,13 +35,15 @@ export const Input: React.FC<InputProps> = ({
   useEffect(() => {
     onInput(name, inputState.value, inputState.isValid);
   }, [name, inputState.value, inputState.isValid, onInput]);
+
   return (
     <StyledInputBox flexDirection={flexDirection}>
       {label && <StyledInputLabel>{label}</StyledInputLabel>}
       <StyledInput
         value={inputState.value}
         placeholder={placeholder}
-        onChange={onInputChange}
+        type={type}
+        onChange={(e) => onInputChange(e, validators)}
         onBlur={onInputTouch}
       />
     </StyledInputBox>

@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
+import { validate, Validator } from './validators';
 
 enum InputActionsTypes {
   ON_INPUT_CHANGE = 'ON_INPUT_CHANGE',
@@ -15,6 +16,7 @@ type Actions =
   | {
       type: InputActionsTypes.ON_INPUT_CHANGE;
       value: string | number;
+      validators: Validator[]
     }
   | { type: InputActionsTypes.ON_INPUT_TOUCHED };
 
@@ -24,7 +26,7 @@ const inputReducer = (state: InputState, action: Actions) => {
       return {
         ...state,
         value: action.value,
-        // isValid: action.isValid,
+        isValid: validate(action.value, action.validators),
         isTouched: true,
       };
     case InputActionsTypes.ON_INPUT_TOUCHED:
@@ -42,20 +44,22 @@ export const UseInput = (value: string | number, isValid?: boolean) => {
   };
   const [inputState, dispatch] = useReducer(inputReducer, initialInputState);
 
-  const onInputChange = useCallback((
-    event: React.FormEvent<HTMLInputElement>,
-  ): void => {
-    dispatch({
-      type: InputActionsTypes.ON_INPUT_CHANGE,
-      value: event.currentTarget.value,
-    });
-  },[]);
+  const onInputChange = useCallback(
+    (event: React.FormEvent<HTMLInputElement>, validators: Validator[]): void => {
+      dispatch({
+        type: InputActionsTypes.ON_INPUT_CHANGE,
+        value: event.currentTarget.value,
+        validators,
+      });
+    },
+    []
+  );
 
   const onInputTouch = useCallback(() => {
     dispatch({
       type: InputActionsTypes.ON_INPUT_TOUCHED,
     });
-  },[]);
+  }, []);
 
   return { inputState, onInputChange, onInputTouch };
 };
