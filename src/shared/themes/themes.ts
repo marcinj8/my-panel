@@ -1,5 +1,6 @@
 export interface ThemeData {
   bg: {};
+  btBg: {};
   color: {};
   border: {};
   fontSize: {};
@@ -43,7 +44,7 @@ export const themes = {
       danger: 'pink',
       primary: 'gray',
       secondary: 'white',
-      confirm: 'lightgreen',
+      confirm: 'green',
     },
     color: {
       main: 'white',

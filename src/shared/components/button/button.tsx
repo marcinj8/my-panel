@@ -14,6 +14,7 @@ interface ButtonProps {
   disabled?: boolean;
   variant?: 'primary' | 'inline';
   type?: ButtonType;
+  bTnCenter?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,10 +23,11 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   variant = 'primary',
   type = 'primary',
+  bTnCenter = true,
 }) => {
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if(disabled) {
-      return null
+    if (disabled) {
+      return null;
     }
     e.preventDefault();
     clicked(e);
@@ -43,7 +45,12 @@ export const Button: React.FC<ButtonProps> = ({
   }, [variant]);
 
   return (
-    <Component btnType={type} disabled={disabled} onClick={clickHandler}>
+    <Component
+      bTnCenter={bTnCenter}
+      btnType={type}
+      disabled={disabled}
+      onClick={clickHandler}
+    >
       {name}
     </Component>
   );

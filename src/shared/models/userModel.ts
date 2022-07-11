@@ -2,6 +2,6 @@ export interface UserData {
   email: string;
   name?: string;
   password?: string;
-  cities?: string[];
+  weatherCities?: string[];
   currency?: string[];
 }

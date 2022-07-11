@@ -3,28 +3,42 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { ThemeProvider } from 'styled-components';
 
+import { Navigation } from './navigation';
+import { SideMenu } from './sideMenu';
 import { Auth } from './authPage';
 
-import { checkIsLoggedin, logoutUser } from './store/loginSlice/actions';
+import { checkIsLoggedin } from './store/loginSlice/actions';
 
 import './App.css';
 
 function App() {
   const isLoggedin = useAppSelector((state) => state.userData.userData);
   const theme = useAppSelector((state) => state.themeData);
+  const { isMenuShow } = useAppSelector((state) => state.userSettings);
   const dispatch = useAppDispatch();
 
   const routers = useMemo(() => {
     if (isLoggedin !== null) {
       return (
         <>
-          <nav>
-            <button onClick={() => dispatch(logoutUser())}>logout</button>
-          </nav>
-          <Routes>
-            <Route path='/' element={<h1>logged in</h1>}></Route>
-            <Route path='*' element={<Navigate to='/' replace />} />
-          </Routes>
+          <Navigation />
+          <SideMenu />
+          <section
+            style={{
+              position: 'absolute',
+              height: '93vh',
+              right: 0, 
+              background: 'purple',
+              width: isMenuShow ? 'calc(100% - 200px)' : '100%',
+              margin: '10px 0',
+              transition: 'all .3s'
+            }}
+          >
+            <Routes>
+              <Route path='/' element={<h1>logged in</h1>}></Route>
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
+          </section>
         </>
       );
     } else {
@@ -35,7 +49,7 @@ function App() {
         </Routes>
       );
     }
-  }, [isLoggedin]);
+  }, [isLoggedin, isMenuShow]);
 
   useEffect(() => {
     checkIsLoggedin(dispatch);

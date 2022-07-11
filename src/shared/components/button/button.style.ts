@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
-export const StyledButtonDefault = styled.button<{ btnType: string }>`
+export const StyledButtonDefault = styled.button<{
+  btnType: string;
+  bTnCenter: boolean;
+}>`
   width: 150px;
-  margin: 5px auto;
+  margin: ${({ bTnCenter }) => (bTnCenter ? '8px auto' : '8px')};
   padding: 5px;
   background: ${({ theme, btnType }) => theme.btBg[btnType]};
   color: ${({ theme }) => theme.color.main};
   border: ${({ theme }) => '1px solid ' + theme.border.main};
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s;
   &:disabled {
     background: lightgray;
     cursor: default;
@@ -18,6 +22,7 @@ export const StyledButtonDefault = styled.button<{ btnType: string }>`
 `;
 
 export const StyledButton = styled(StyledButtonDefault)`
+  box-shadow: 3px 4px 5px gray;
   background: ${({ theme, btnType }) => theme.btBg[btnType]};
   color: ${({ theme }) => theme.color.main};
   border: ${({ theme }) => '1px solid ' + theme.border.main};
@@ -25,9 +30,8 @@ export const StyledButton = styled(StyledButtonDefault)`
 `;
 
 export const StyledButtonInnline = styled(StyledButtonDefault)`
-  width: 200px;
   background: transparent;
-  color: ${({ theme }) => theme.color.main};
+  color: ${({ theme, btnType }) => theme.color[btnType]};
   border: none;
   &:disabled {
     background: transparent;
