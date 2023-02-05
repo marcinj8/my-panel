@@ -32,7 +32,7 @@ export const loginUser = (userData: UserData) => {
     axios
       .post(backendLink, { userData: JSON.stringify(userData) }, config)
       .then((res: AxiosRequestConfig) => {
-        console.log(res);
+        // console.log(res);
         localStorage.setItem('userData', JSON.stringify(res.data.userData));
         return dispatch(
           succes({
@@ -42,7 +42,7 @@ export const loginUser = (userData: UserData) => {
         );
       })
       .catch((err: AxiosError) => {
-        console.log(err);
+        // console.log(err);
         return dispatch(error({ code: 404 }));
       });
   };

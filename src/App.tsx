@@ -10,6 +10,7 @@ import { Auth } from './authPage';
 import { checkIsLoggedin } from './store/loginSlice/actions';
 
 import './App.css';
+import { Home } from './home';
 
 function App() {
   const isLoggedin = useAppSelector((state) => state.userData.userData);
@@ -23,22 +24,10 @@ function App() {
         <>
           <Navigation />
           <SideMenu />
-          <section
-            style={{
-              position: 'absolute',
-              height: '93vh',
-              right: 0, 
-              background: 'purple',
-              width: isMenuShow ? 'calc(100% - 200px)' : '100%',
-              margin: '10px 0',
-              transition: 'all .3s'
-            }}
-          >
             <Routes>
-              <Route path='/' element={<h1>logged in</h1>}></Route>
+              <Route path='/' element={<Home isMenuShow={isMenuShow} />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
-          </section>
         </>
       );
     } else {

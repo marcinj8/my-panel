@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledSideMenu = styled.menu`
   position: fixed;
+  top: 6vh;
   width: 200px;
   height: 100vh;
   border-right: 1px solid black;

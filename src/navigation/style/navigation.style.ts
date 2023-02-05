@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledNav = styled.nav`
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
-  box-shadow: 0 3px 10px;
+  height: 6vh;
   padding: 5px;
   background: ${({ theme }) => theme.bg.secondary};
   border-bottom: 1px solid black;
   display: flex;
-  z-index: 10;
+  z-index: 9;
   justify-content: space-between;
+  box-shadow: 2px 3px 10px black;
 `;
