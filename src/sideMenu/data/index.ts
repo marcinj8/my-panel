@@ -1,0 +1,1 @@
+export { pagesData } from './pagesData';

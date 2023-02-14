@@ -1,2 +1,2 @@
-export type { UserData } from './userModel';
+export type { UserDataModel } from './userModel';
 export type { ErrorModel } from './errorModel';

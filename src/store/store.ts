@@ -1,14 +1,17 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { UserData } from '../shared/models';
-import userReducer from './loginSlice/reducer';
+import { UserDataModel } from '../shared/models';
+
+import loginrReducer from './loginSlice/reducer';
 import themeReducer from './themeSlice/reducer';
 import userSettingsReducer from './userSettings/reducer';
+import userDataReducer from './userData/reducer';
 
 export const store = configureStore({
   reducer: {
-    userData: userReducer,
+    loginData: loginrReducer,
     themeData: themeReducer,
     userSettings: userSettingsReducer,
+    userData: userDataReducer
   },
 });
 
@@ -18,5 +21,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
-  Action<string | UserData>
+  Action<string | UserDataModel>
 >;

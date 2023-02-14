@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledHomeContainer = styled.section<{isMenuShow: boolean}>`
+export const StyledHocSection = styled.section<{isMenuShow: boolean}>`
   position: absolute;
   height: 100vh;
   padding: 8vh;
@@ -10,6 +10,6 @@ export const StyledHomeContainer = styled.section<{isMenuShow: boolean}>`
   margin: 0;
   transition: all .3s;
   @media(min-width: ${props => props.theme.devices.desktop}) {
-  width: ${({ isMenuShow }) => (isMenuShow ? 'calc(100% - 200px)' : '100%')};
+    width: ${({ isMenuShow }) => (isMenuShow ? 'calc(100% - 200px)' : '100%')};
   }
 `;

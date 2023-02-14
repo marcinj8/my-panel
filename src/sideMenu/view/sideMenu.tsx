@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { Button } from '../../shared/components';
 
 import { toggleMenu } from '../../store/userSettings/reducer';
 import { hideSideMenu, showSideMenu } from '../animations/sideMenuAnimation';
+import { pagesData } from '../data';
 
 import { StyledSideMenu } from '../style/sideMenu.style';
 
@@ -12,6 +14,12 @@ export const SideMenu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isMenuShow } = useAppSelector((state) => state.userSettings);
   const sideMenuRef = useRef<HTMLElement>(null);
+
+  const links = pagesData.map((item) => (
+    <li key={item.name}>
+      <NavLink to={item.link}>{item.name}</NavLink>
+    </li>
+  ));
 
   useEffect(() => {
     if (sideMenuRef.current === null) {
@@ -29,7 +37,7 @@ export const SideMenu: React.FC = () => {
       <h3>settings</h3>
       <ul>
         <li>theme</li>
-        <li>weather</li>
+        {links}
         <li>currency</li>
         <li>my finances</li>
         <li>calendar</li>

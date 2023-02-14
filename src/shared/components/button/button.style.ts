@@ -12,7 +12,8 @@ export const StyledButtonDefault = styled.button<{
   border: ${({ theme }) => '1px solid ' + theme.border.main};
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.1s;
+  outline: none;
   &:disabled {
     background: lightgray;
     cursor: default;
@@ -27,6 +28,9 @@ export const StyledButton = styled(StyledButtonDefault)`
   color: ${({ theme }) => theme.color.main};
   border: ${({ theme }) => '1px solid ' + theme.border.main};
   border-radius: 5px;
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 export const StyledButtonInnline = styled(StyledButtonDefault)`

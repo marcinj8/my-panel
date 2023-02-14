@@ -10,7 +10,7 @@ export const themes = {
     bg: {
       main: 'wheat',
       secondary: 'silver',
-      danger: 'pink',
+      danger: 'blue',
     },
     btBg: {
       danger: 'pink',
@@ -32,6 +32,10 @@ export const themes = {
       small: '.8rem',
       normal: '1rem',
       big: '1.2rem',
+    },
+    devices: {
+      tablet: '450px',
+      desktop: '750px',
     },
   },
   dark: {
@@ -60,6 +64,10 @@ export const themes = {
       small: '.8rem',
       normal: '1rem',
       big: '1.2rem',
+    },
+    devices: {
+      tablet: '450px',
+      desktop: '750px',
     },
   },
 };

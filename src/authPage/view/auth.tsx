@@ -8,7 +8,7 @@ import { StyledAuthTitle, StyledAuthView } from '../style/auth.style';
 
 export const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
-  const loginSlice = useAppSelector((state) => state.userData);
+  const loginSlice = useAppSelector((state) => state.loginData);
 
   return (
     <StyledAuthView>

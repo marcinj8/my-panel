@@ -22,7 +22,7 @@ export const BatteryStatus = () => {
   return (
     <>
       <AsyncView status={status} message={null} />
-      {battery.fetched && <div>Battery is on {battery.level * 100}%</div>}
+      {battery.fetched && <div>Battery is on {Math.round(battery.level * 100)}%</div>}
       {battery.fetched &&
         battery.charging &&
         (battery.chargingTime === 0 ? (

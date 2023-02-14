@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { UserData } from '../../shared/models';
+import { UserDataModel } from '../../shared/models';
 // import { AppThunk, store } from '../store';
 import { loading, succes, error, logout } from './reducer';
 const config: AxiosRequestConfig = {
@@ -25,7 +25,7 @@ export const logoutUser = () => {
   return logout();
 };
 
-export const loginUser = (userData: UserData) => {
+export const loginUser = (userData: UserDataModel) => {
   return async (dispatch: any) => {
     dispatch(loading());
     const backendLink = `http://localhost:5000/api/user/login`;

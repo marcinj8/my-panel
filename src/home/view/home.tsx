@@ -2,13 +2,12 @@ import React from 'react';
 
 import { DeviceInfo } from '../../deviceInfo';
 
-import { StyledHomeContainer } from '../style/homeView.style';
+import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
 
-export const Home: React.FC<{ isMenuShow: boolean }> = ({ isMenuShow }) => {
-
+export const Home: React.FC = () => {
   return (
-    <StyledHomeContainer isMenuShow={isMenuShow}>
+    <HocSection>
       <DeviceInfo />
-    </StyledHomeContainer>
+    </HocSection>
   );
 };

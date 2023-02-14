@@ -1,23 +1,32 @@
-import React, { useEffect } from 'react';
-import { useGeolocation } from 'react-use';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { getLocation } from '../../deviceInfo/data/locationData';
 import { getFullCityWeather } from '../data/weatherData';
 
-export const Weather = () => {
-  const location = useGeolocation();
-  console.log(location.latitude, location.loading);
+export const Weather:React.FC = () => {
+  const [location, setLocation] = useState<null | {
+    longitude: number;
+    latitude: number;
+  }>(null);
+  let weather = useRef<any>(null);
 
   useEffect(() => {
-    if (location.loading || location.latitude === null) {
-      return;
+    if (!location) {
+      getLocation(setLocation);
     }
-    const weather = getFullCityWeather(location.latitude, location.longitude);
-    console.log(weather);
-  }, [location.latitude, location.longitude, location.loading]);
+    if (location) {
+      weather.current = getFullCityWeather(
+        location.latitude,
+        location.longitude
+      );
+    }
+  }, [location]);
+
+  console.log(weather.current);
 
   return (
     <div>
-      Location status: {location.loading ? 'loading' : 'ready'}
-      <div>Lat: {location.latitude}</div>
+      Weather
     </div>
   );
 };
