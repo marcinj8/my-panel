@@ -56,7 +56,7 @@ export const AuthForm: React.FC<AuthFromData> = ({
       {!isLoginMode && (
         <Input
           validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
-          label='name'
+          label='imię'
           value=''
           type='text'
           name='name'
@@ -73,7 +73,7 @@ export const AuthForm: React.FC<AuthFromData> = ({
       />
       <Input
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
-        label='password'
+        label='hasło'
         value=''
         type='password'
         name='password'
@@ -82,13 +82,13 @@ export const AuthForm: React.FC<AuthFromData> = ({
       <Button
         disabled={!formState.isFormValid}
         type='confirm'
-        name='login'
+        name='dalej'
         clicked={onAuthHandler}
       />
-      <h5>{!isLoginMode ? 'you have account?' : "you don't have account?"}</h5>
+      <h5>{!isLoginMode ? 'masz konto?' : "nie masz konta?"}</h5>
       <Button
         variant='inline'
-        name={`switch to ${isLoginMode ? 'register' : 'login'}`}
+        name={`zmień na ${isLoginMode ? 'rejestrację' : 'logowanie'}`}
         clicked={() => setIsLoginMode((prev: boolean) => !prev)}
       />
     </StyledAuthForm>

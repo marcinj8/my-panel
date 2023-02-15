@@ -22,7 +22,7 @@ export const Weather:React.FC = () => {
     }
   }, [location]);
 
-  console.log(weather.current);
+  // console.log(weather.current);
 
   return (
     <div>

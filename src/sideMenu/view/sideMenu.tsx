@@ -34,18 +34,15 @@ export const SideMenu: React.FC = () => {
 
   return (
     <StyledSideMenu ref={sideMenuRef}>
-      <h3>settings</h3>
+      <h3>ustawienia</h3>
       <ul>
-        <li>theme</li>
         {links}
-        <li>currency</li>
-        <li>my finances</li>
-        <li>calendar</li>
+        <li>kalendarz</li>
         <li>email</li>
         <Button
           variant='inline'
           type='danger'
-          name='close'
+          name='zamknij'
           clicked={() => dispatch(toggleMenu(false))}
         />
       </ul>

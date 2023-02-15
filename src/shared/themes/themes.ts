@@ -8,9 +8,9 @@ export interface ThemeData {
 export const themes = {
   default: {
     bg: {
-      main: 'wheat',
+      main: 'lightblue',
       secondary: 'silver',
-      danger: 'blue',
+      danger: 'red',
     },
     btBg: {
       danger: 'pink',
