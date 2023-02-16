@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { Button } from '../../shared/components';
@@ -8,17 +7,19 @@ import { toggleMenu } from '../../store/userSettings/reducer';
 import { hideSideMenu, showSideMenu } from '../animations/sideMenuAnimation';
 import { pagesData } from '../data';
 
-import { StyledSideMenu } from '../style/sideMenu.style';
+import { StyledSideMenu, StyledSideMenuItem } from '../style/sideMenu.style';
 
 export const SideMenu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isMenuShow } = useAppSelector((state) => state.userSettings);
+
   const sideMenuRef = useRef<HTMLElement>(null);
+  const navLinkRef = useRef<HTMLAnchorElement>(null);
 
   const links = pagesData.map((item) => (
-    <li key={item.name}>
-      <NavLink to={item.link}>{item.name}</NavLink>
-    </li>
+    <StyledSideMenuItem key={item.name} ref={navLinkRef} to={item.link}>
+      {item.name}
+    </StyledSideMenuItem>
   ));
 
   useEffect(() => {

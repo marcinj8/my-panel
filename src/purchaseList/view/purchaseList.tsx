@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
-import { purchaseList } from '../data/purchaseLIstData';
+import { List } from '../components/';
 
 export const PurchaseList = () => {
   const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
@@ -14,21 +14,7 @@ export const PurchaseList = () => {
         <button onClick={() => setIsPrivateList(!isPrivateList)}>
           {isPrivateList ? 'domową' : 'prywatną'}
         </button>
-        {isPrivateList ? <div>prywatna</div> : <div>domowa</div>}
-        <ul>
-          {purchaseList.map((item) => (
-            <li
-              style={{ margin: '10px', border: '1px solid' }}
-              key={item.name + item.added}
-            >
-              <h3>{item.name}</h3>
-              <div>
-                Ilość: {item.quantity} {item.unit}{' '}
-              </div>
-              {item.description && <div>Uwagi: {item.description}</div>}
-            </li>
-          ))}
-        </ul>
+        <List listType={isPrivateList ? 'private' : 'home'} />
       </>
     </HocSection>
   );
