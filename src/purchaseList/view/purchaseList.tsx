@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
+import { useAppSelector } from '../../store/hooks';
 import { List } from '../components/';
+import { getHomePurchseLists } from '../data/purchaseLIstData';
 
 export const PurchaseList = () => {
   const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
+  const { homePurchaseLists } = useAppSelector((state) => state.userData);
+  console.log(homePurchaseLists);
+
+  useEffect(() => {
+    if (!homePurchaseLists) {
+      getHomePurchseLists();
+    }
+  }, [homePurchaseLists]);
 
   return (
     <HocSection>

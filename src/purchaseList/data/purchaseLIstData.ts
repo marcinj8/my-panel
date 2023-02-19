@@ -1,3 +1,5 @@
+import axios, { AxiosResponse } from 'axios';
+
 export interface PurchaseListItemModel {
   id: string;
   name: string;
@@ -9,6 +11,13 @@ export interface PurchaseListItemModel {
   unit: string;
   description: string;
 }
+
+export const getHomePurchseLists = () => {
+  axios
+    .get(`${process.env.REACT_APP_BACKEND_URL}/purchase-list/home-lists`)
+    .then((res: AxiosResponse) => console.log(res.data))
+    .catch((err: AxiosResponse) => console.log(err));
+};
 
 export const purchaseList = [
   {

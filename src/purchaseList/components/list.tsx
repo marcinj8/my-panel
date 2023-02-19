@@ -30,6 +30,5 @@ export const List: React.FC<ListData> = ({ listType }) => {
     });
   }, [listType]);
 
-  console.log(list);
   return <ul>{list}</ul>;
 };

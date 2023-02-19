@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { UserDataModel } from '../../shared/models';
+import { UserLoginDataModel } from '../../shared/models';
 // import { AppThunk, store } from '../store';
 import { loading, succes, error, logout } from './reducer';
 const config: AxiosRequestConfig = {
@@ -25,10 +25,10 @@ export const logoutUser = () => {
   return logout();
 };
 
-export const loginUser = (userData: UserDataModel) => {
+export const loginUser = (userData: UserLoginDataModel) => {
   return async (dispatch: any) => {
     dispatch(loading());
-    const backendLink = `http://localhost:5000/api/user/login`;
+    const backendLink = `${process.env.REACT_APP_BACKEND_URL}/user/login`;
     axios
       .post(backendLink, { userData: JSON.stringify(userData) }, config)
       .then((res: AxiosRequestConfig) => {
@@ -36,6 +36,7 @@ export const loginUser = (userData: UserDataModel) => {
         localStorage.setItem('userData', JSON.stringify(res.data.userData));
         return dispatch(
           succes({
+            id: res.data.userData.id,
             email: res.data.userData.email,
             name: res.data.userData.name,
           })

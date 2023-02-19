@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ErrorModel, UserDataModel } from '../../shared/models';
+import { ErrorModel, UserLoginDataModel } from '../../shared/models';
 import { RootState } from '../store';
 
 export interface UserState {
-  userData: UserDataModel | null;
+  userData: UserLoginDataModel | null;
   status: 'loading' | 'loggedin' | 'init' | 'error';
   message: string | null;
 }
@@ -21,13 +21,13 @@ export const userDataSlice = createSlice({
     loading: (state) => {
       state.status = 'loading';
     },
-    succes: (state, action: PayloadAction<UserDataModel>) => {
+    succes: (state, action: PayloadAction<UserLoginDataModel>) => {
       state.status = 'loggedin';
       state.userData = action.payload;
     },
     error: (state, action: PayloadAction<ErrorModel>) => {
       state.status = 'error';
-      state.message = 'An error occured, please try agian later.';
+      state.message = action.payload.message ? action.payload.message : 'An error occured, please try agian later.';
     },
     setInit: (state) => {
       state.status = 'init';

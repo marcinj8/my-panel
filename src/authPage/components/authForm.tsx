@@ -25,14 +25,6 @@ export const AuthForm: React.FC<AuthFromData> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const onAuthHandler = () => {
-    const userData = {
-      email: formState.inputs.email.value.toString(),
-      password: formState.inputs.password.value.toString(),
-    };
-    dispatch(loginUser(userData));
-  };
-
   const { formState, onInput, setFormData } = UseFrom(
     {
       email: {
@@ -47,9 +39,18 @@ export const AuthForm: React.FC<AuthFromData> = ({
     false
   );
 
+  const onAuthHandler = () => {
+    console.log(formState);
+    const userData = {
+      email: formState.inputs.email.value.toString(), // zastąpić => foreach formstate.inputs
+      password: formState.inputs.password.value.toString(),
+    };
+    dispatch(loginUser(userData));
+  };
+
   useEffect(() => {
     switchAuthMode(isLoginMode, setFormData, formState);
-  }, [isLoginMode]);
+  }, [isLoginMode, setFormData]); //formState => powoduje infinity loop
 
   return (
     <StyledAuthForm>
@@ -85,10 +86,10 @@ export const AuthForm: React.FC<AuthFromData> = ({
         name='dalej'
         clicked={onAuthHandler}
       />
-      <h5>{!isLoginMode ? 'masz konto?' : "nie masz konta?"}</h5>
+      <h5>{!isLoginMode ? 'masz konto?' : 'nie masz konta?'}</h5>
       <Button
         variant='inline'
-        name={`zmień na ${isLoginMode ? 'rejestrację' : 'logowanie'}`}
+        name={`${isLoginMode ? 'zarejestruj' : 'zaloguj'} się`}
         clicked={() => setIsLoginMode((prev: boolean) => !prev)}
       />
     </StyledAuthForm>

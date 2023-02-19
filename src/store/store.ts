@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { UserDataModel } from '../shared/models';
+import { UserLoginDataModel } from '../shared/models';
 
 import loginrReducer from './loginSlice/reducer';
 import themeReducer from './themeSlice/reducer';
@@ -21,5 +21,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
-  Action<string | UserDataModel>
+  Action<string | UserLoginDataModel>
 >;
