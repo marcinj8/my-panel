@@ -2,8 +2,8 @@ import React, { MouseEventHandler, useMemo } from 'react';
 
 import {
   StyledButtonDefault,
-  StyledButton,
-  StyledButtonInnline,
+  StyledButtonPrimary,
+  StyledButtonInline,
 } from './button.style';
 
 type ButtonType = 'danger' | 'primary' | 'secondary' | 'confirm';
@@ -36,9 +36,9 @@ export const Button: React.FC<ButtonProps> = ({
   const Component = useMemo(() => {
     switch (variant) {
       case 'primary':
-        return StyledButton;
+        return StyledButtonPrimary;
       case 'inline':
-        return StyledButtonInnline;
+        return StyledButtonInline;
       default:
         return StyledButtonDefault;
     }

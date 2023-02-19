@@ -20,6 +20,7 @@ export const StyledListItem = styled.li<{ purchased: boolean }>`
   @media (min-width: ${(props) => props.theme.devices.desktop}) {
     text-align: left;
     width: 90%;
+    max-width: 550px;
     & h3 {
       display: inline;
       padding: 5px;

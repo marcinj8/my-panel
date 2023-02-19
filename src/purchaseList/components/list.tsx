@@ -1,7 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { ReactEventHandler, useMemo, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { purchaseList } from '../data/purchaseLIstData';
+import { Button } from '../../shared/components';
 import { ListItem } from './';
+
+import { listItemClickHandler } from '../data/purchaseListData';
 
 interface ListData {
   listType: 'private' | 'home';
@@ -9,9 +12,16 @@ interface ListData {
 }
 
 export const List: React.FC<ListData> = ({ listType }) => {
+  const lists = useAppSelector(
+    (state) => state.userData[`${listType}PurchaseLists`]
+  );
+  const dispatch = useAppDispatch();
+
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
   const list = useMemo(() => {
-    return purchaseList.map((item) => {
-      if (listType === item.type) {
+    if (lists?.items) {
+      return lists.items.map((item) => {
         return (
           <ListItem
             key={item.id}
@@ -22,13 +32,23 @@ export const List: React.FC<ListData> = ({ listType }) => {
             quantity={item.quantity}
             unit={item.unit}
             description={item.description}
+            clicked={(e: ReactEventHandler) =>
+              listItemClickHandler(dispatch, item, isEditMode, lists.type)
+            }
           />
         );
-      } else {
-        return null;
-      }
-    });
-  }, [listType]);
+      });
+    }
+  }, [lists, isEditMode, dispatch]);
 
-  return <ul>{list}</ul>;
+  return (
+    <>
+      <Button
+        type={isEditMode ? 'danger' : 'primary'}
+        name={isEditMode ? 'zakończ' : 'edytuj'}
+        clicked={() => setIsEditMode(!isEditMode)}
+      />
+      <ul>{list}</ul>
+    </>
+  );
 };

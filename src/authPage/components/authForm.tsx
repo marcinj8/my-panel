@@ -40,7 +40,7 @@ export const AuthForm: React.FC<AuthFromData> = ({
   );
 
   const onAuthHandler = () => {
-    console.log(formState);
+    // console.log(formState);
     const userData = {
       email: formState.inputs.email.value.toString(), // zastąpić => foreach formstate.inputs
       password: formState.inputs.password.value.toString(),

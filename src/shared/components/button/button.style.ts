@@ -22,8 +22,8 @@ export const StyledButtonDefault = styled.button<{
   }
 `;
 
-export const StyledButton = styled(StyledButtonDefault)`
-  box-shadow: 3px 4px 5px gray;
+export const StyledButtonPrimary = styled(StyledButtonDefault)`
+  box-shadow: 3px 4px 5px black;
   background: ${({ theme, btnType }) => theme.btBg[btnType]};
   color: ${({ theme }) => theme.color.main};
   border: ${({ theme }) => '1px solid ' + theme.border.main};
@@ -33,7 +33,7 @@ export const StyledButton = styled(StyledButtonDefault)`
   }
 `;
 
-export const StyledButtonInnline = styled(StyledButtonDefault)`
+export const StyledButtonInline = styled(StyledButtonDefault)`
   background: transparent;
   color: ${({ theme, btnType }) => theme.color[btnType]};
   border: none;

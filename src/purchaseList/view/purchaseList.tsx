@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
-import { useAppSelector } from '../../store/hooks';
+import { fetchPurchaseList } from '../../store/userData/actions';
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
 import { List } from '../components/';
-import { getHomePurchseLists } from '../data/purchaseLIstData';
+import { Button } from '../../shared/components';
 
 export const PurchaseList = () => {
-  const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
   const { homePurchaseLists } = useAppSelector((state) => state.userData);
-  console.log(homePurchaseLists);
+  const dispatch = useAppDispatch();
+
+  const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
 
   useEffect(() => {
     if (!homePurchaseLists) {
-      getHomePurchseLists();
+      console.log(homePurchaseLists);
+      dispatch(fetchPurchaseList());
     }
-  }, [homePurchaseLists]);
+  }, [homePurchaseLists, dispatch]);
 
   return (
     <HocSection>
       <>
         <h3>{isPrivateList ? 'prywatna' : 'domowa'} lista zakupów</h3>
         <div>zmień na liste </div>
-        <button onClick={() => setIsPrivateList(!isPrivateList)}>
-          {isPrivateList ? 'domową' : 'prywatną'}
-        </button>
+        <Button
+          variant='primary'
+          clicked={() => setIsPrivateList(!isPrivateList)}
+          name={isPrivateList ? 'domową' : 'prywatną'}
+        />
         <List listType={isPrivateList ? 'private' : 'home'} />
       </>
     </HocSection>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { listItemClickHandler } from '../data/purchaseListData';
 
 import { StyledListItem } from '../style/listItem.style';
 
@@ -10,6 +11,7 @@ interface ListItemData {
   quantity: number;
   unit: string;
   description: string;
+  clicked: Function;
 }
 
 export const ListItem: React.FC<ListItemData> = ({
@@ -20,9 +22,10 @@ export const ListItem: React.FC<ListItemData> = ({
   quantity,
   unit,
   description,
+  clicked,
 }) => {
   return (
-    <StyledListItem purchased={purchased} id={id}>
+    <StyledListItem purchased={purchased} id={id} onClick={(e) => clicked(e)}>
       <h3>{name}</h3>
       <div>
         Ilość: {quantity} {unit}
