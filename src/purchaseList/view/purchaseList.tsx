@@ -7,9 +7,12 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { List } from '../components/';
 import { Button } from '../../shared/components';
+import { AsyncView } from '../../shared/components/asyncView';
 
 export const PurchaseList = () => {
-  const { homePurchaseLists } = useAppSelector((state) => state.userData);
+  const { homePurchaseLists, status, message } = useAppSelector(
+    (state) => state.userData
+  );
   const dispatch = useAppDispatch();
 
   const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
@@ -24,6 +27,7 @@ export const PurchaseList = () => {
   return (
     <HocSection>
       <>
+      <AsyncView status={status} message={message} />
         <h3>{isPrivateList ? 'prywatna' : 'domowa'} lista zakupów</h3>
         <div>zmień na liste </div>
         <Button
@@ -32,6 +36,7 @@ export const PurchaseList = () => {
           name={isPrivateList ? 'domową' : 'prywatną'}
         />
         <List listType={isPrivateList ? 'private' : 'home'} />
+        <Button name='+' clicked={() => console.log('dodaj okragły button')} />
       </>
     </HocSection>
   );

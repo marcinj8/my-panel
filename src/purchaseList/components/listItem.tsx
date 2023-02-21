@@ -1,5 +1,4 @@
 import React from 'react';
-import { listItemClickHandler } from '../data/purchaseListData';
 
 import { StyledListItem } from '../style/listItem.style';
 

@@ -1,10 +1,14 @@
 import React, { ReactEventHandler, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { Button } from '../../shared/components';
+import { Button, Modal } from '../../shared/components';
 import { ListItem } from './';
 
-import { listItemClickHandler } from '../data/purchaseListData';
+import {
+  listItemClickHandler,
+  PurchaseListItemModel,
+} from '../data/purchaseListData';
+import { EditItemForm } from './editItemForm';
 
 interface ListData {
   listType: 'private' | 'home';
@@ -18,6 +22,9 @@ export const List: React.FC<ListData> = ({ listType }) => {
   const dispatch = useAppDispatch();
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [itemEdited, setItemEdited] = useState<PurchaseListItemModel | null>(
+    null
+  );
 
   const list = useMemo(() => {
     if (lists?.items) {
@@ -33,16 +40,26 @@ export const List: React.FC<ListData> = ({ listType }) => {
             unit={item.unit}
             description={item.description}
             clicked={(e: ReactEventHandler) =>
-              listItemClickHandler(dispatch, item, isEditMode, lists.type)
+              listItemClickHandler(
+                dispatch,
+                item,
+                isEditMode,
+                lists.type,
+                itemEdited,
+                setItemEdited
+              )
             }
           />
         );
       });
     }
-  }, [lists, isEditMode, dispatch]);
+  }, [lists, isEditMode, dispatch, itemEdited, setItemEdited]);
 
   return (
     <>
+      <Modal show={itemEdited !== null} onCancel={() => setItemEdited(null)}>
+        <EditItemForm item={itemEdited} />
+      </Modal>
       <Button
         type={isEditMode ? 'danger' : 'primary'}
         name={isEditMode ? 'zakończ' : 'edytuj'}

@@ -4,14 +4,15 @@ import {
 } from '../../store/userData/reducer';
 
 export interface PurchaseListItemModel {
+  [key:string]: any;
   id: string;
   name: string;
-  added: Date;
-  purchased: boolean;
-  listName: string;
   quantity: number;
   unit: string;
   description: string;
+  listName: string;
+  added: Date;
+  purchased: boolean;
 }
 
 export const tooglePurchaseProperty = (
@@ -27,10 +28,12 @@ export const listItemClickHandler = (
   dispatch: any,
   item: PurchaseListItemModel,
   isEditMode: boolean,
-  listType: PurchaseListType
+  listType: PurchaseListType,
+  itemEdited: PurchaseListItemModel | null,
+  setItemEdited: Function
 ) => {
   if (isEditMode) {
-    console.log(dispatch, 'e,item', item);
+    setItemEdited(item);
   } else {
     tooglePurchaseProperty(dispatch, item, listType);
   }

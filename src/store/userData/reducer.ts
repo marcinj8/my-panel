@@ -49,7 +49,7 @@ const updateItem = (
   }
   const listType = (action.payload.listType + 'PurchaseLists') as string;
   const updatedList = { ...state[listType] };
-  // updatedList.items = [...state[listType].items];
+  // updatedList.items = [...state[listType].items]; // deep copy
 
   const updatedItemIndex = updatedList.items.findIndex(
     (item: PurchaseListItemModel) => item.id === action.payload.itemUpdated.id
