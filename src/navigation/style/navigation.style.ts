@@ -8,7 +8,7 @@ export const StyledNav = styled.nav`
   background: ${({ theme }) => theme.bg.secondary};
   border-bottom: 1px solid black;
   display: flex;
-  z-index: 9;
+  z-index: 99;
   justify-content: space-between;
   box-shadow: 2px 3px 10px black;
 `;

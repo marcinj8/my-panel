@@ -8,6 +8,7 @@ import { hideSideMenu, showSideMenu } from '../animations/sideMenuAnimation';
 import { pagesData } from '../data';
 
 import { StyledSideMenu, StyledSideMenuItem } from '../style/sideMenu.style';
+import { Backdrop } from '../../shared/components/modal/modal';
 
 export const SideMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,19 +35,26 @@ export const SideMenu: React.FC = () => {
   });
 
   return (
-    <StyledSideMenu ref={sideMenuRef}>
-      <h3>ustawienia</h3>
-      <ul>
-        {links}
-        <li>kalendarz</li>
-        <li>email</li>
-        <Button
-          variant='inline'
-          type='danger'
-          name='zamknij'
-          clicked={() => dispatch(toggleMenu(false))}
-        />
-      </ul>
-    </StyledSideMenu>
+    <>
+      <Backdrop
+        show={isMenuShow}
+        clicked={() => dispatch(toggleMenu(false))}
+        mobileOnly
+      />
+      <StyledSideMenu ref={sideMenuRef}>
+        <h3>ustawienia</h3>
+        <ul>
+          {links}
+          <li>kalendarz</li>
+          <li>email</li>
+          <Button
+            variant='inline'
+            type='danger'
+            name='zamknij'
+            clicked={() => dispatch(toggleMenu(false))}
+          />
+        </ul>
+      </StyledSideMenu>
+    </>
   );
 };

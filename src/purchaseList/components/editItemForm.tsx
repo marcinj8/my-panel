@@ -3,10 +3,11 @@ import React from 'react';
 import { PurchaseListItemModel } from '../data/purchaseListData';
 
 import { UseFrom } from '../../shared/hooks/form-hook';
-import { Input } from '../../shared/components';
+import { Button, Input } from '../../shared/components';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
+  VALIDATOR_MIN,
 } from '../../shared/components/input/validators';
 
 interface EditItemFormData {
@@ -48,9 +49,6 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
   };
   const { formState, onInput } = UseFrom(createInputs());
 
-  if (item === null) {
-    return <h3>Brak indeksu</h3>;
-  }
   return (
     <form>
       <h3>{formState.inputs.name.value}</h3>
@@ -63,7 +61,7 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         onInput={onInput}
       />
       <Input
-        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
+        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(1)]}
         label='ilość'
         value={formState.inputs.quantity.value}
         type='number'
@@ -85,6 +83,11 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         type='text'
         name='description'
         onInput={onInput}
+      />
+      <Button
+        type='confirm'
+        name={item ? 'popraw' : 'dodaj'}
+        clicked={() => console.log(formState)}
       />
     </form>
   );

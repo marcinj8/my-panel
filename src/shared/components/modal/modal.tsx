@@ -13,14 +13,15 @@ interface ModalData {
   };
 }
 
-const Backdrop: React.FC<{
+export const Backdrop: React.FC<{
   show: boolean;
   clicked: MouseEventHandler<any>;
-}> = ({ show, clicked }) => {
+  mobileOnly?: boolean;
+}> = ({ show, clicked, mobileOnly = false }) => {
   if (!show) {
     return null;
   }
-  return <StyledBackdrop onClick={clicked} />;
+  return <StyledBackdrop onClick={clicked} mobileOnly={mobileOnly} />;
 };
 
 export const Modal: React.FC<ModalData> = ({
@@ -32,9 +33,11 @@ export const Modal: React.FC<ModalData> = ({
   useEffect(() => {
     console.log(show);
   });
+
   if (!show) {
     return null;
   }
+
   return (
     <>
       <Backdrop show={show} clicked={onCancel} />
@@ -43,7 +46,7 @@ export const Modal: React.FC<ModalData> = ({
         {action && (
           <Button name={action.actionName} clicked={action.actionFn} />
         )}
-        <Button name='zamknij' clicked={onCancel} />
+        <Button name='zamknij' clicked={onCancel} type='danger' />
       </StyledModal>
     </>
   );

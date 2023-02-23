@@ -41,7 +41,7 @@ export const themes = {
   dark: {
     bg: {
       main: 'gray',
-      secondary: 'silver',
+      secondary: 'gray',
       danger: 'pink',
     },
     btBg: {

@@ -9,7 +9,7 @@ export const StyledSideMenu = styled.menu`
   border-right: 1px solid black;
   box-shadow: 2px 3px 5px black;
   background: ${({ theme }) => theme.bg.main};
-  z-index: 10;
+  z-index: 99;
   @media (min-width: ${(props) => props.theme.devices.desktop}) {
     width: 200px;
   }

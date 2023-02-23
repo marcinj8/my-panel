@@ -6,16 +6,18 @@ import { fetchPurchaseList } from '../../store/userData/actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { List } from '../components/';
-import { Button } from '../../shared/components';
+import { Button, Modal } from '../../shared/components';
 import { AsyncView } from '../../shared/components/asyncView';
+import { EditItemForm } from '../components/editItemForm';
 
 export const PurchaseList = () => {
+  const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
+  const [isAddingNewItem, setIsAddingNewItem] = useState<boolean>(false);
+
   const { homePurchaseLists, status, message } = useAppSelector(
     (state) => state.userData
   );
   const dispatch = useAppDispatch();
-
-  const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
 
   useEffect(() => {
     if (!homePurchaseLists) {
@@ -27,7 +29,13 @@ export const PurchaseList = () => {
   return (
     <HocSection>
       <>
-      <AsyncView status={status} message={message} />
+        <Modal
+          show={isAddingNewItem}
+          onCancel={() => setIsAddingNewItem(false)}
+        >
+          <EditItemForm item={null} />
+        </Modal>
+        <AsyncView status={status} message={message} />
         <h3>{isPrivateList ? 'prywatna' : 'domowa'} lista zakupów</h3>
         <div>zmień na liste </div>
         <Button
@@ -36,7 +44,7 @@ export const PurchaseList = () => {
           name={isPrivateList ? 'domową' : 'prywatną'}
         />
         <List listType={isPrivateList ? 'private' : 'home'} />
-        <Button name='+' clicked={() => console.log('dodaj okragły button')} />
+        <Button name='+' clicked={() => setIsAddingNewItem(true)} />
       </>
     </HocSection>
   );
