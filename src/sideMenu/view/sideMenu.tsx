@@ -42,7 +42,6 @@ export const SideMenu: React.FC = () => {
         mobileOnly
       />
       <StyledSideMenu ref={sideMenuRef}>
-        <h3>ustawienia</h3>
         <ul>
           {links}
           <li>kalendarz</li>

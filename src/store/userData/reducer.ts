@@ -61,6 +61,24 @@ const updateItem = (
   };
 };
 
+const setList = (
+  state: UserDataState,
+  action: PayloadAction<{
+    purchaseList: PurchaseList;
+    listType: PurchaseListType;
+  }>
+) => {
+  const listType = (action.payload.listType + 'PurchaseLists') as string;
+  const listUpdated = { ...action.payload.purchaseList };
+  const stateUpdated = { ...state };
+  stateUpdated.status = 'success';
+  stateUpdated[listType] = { ...listUpdated };
+
+  return {
+    ...stateUpdated,
+  };
+};
+
 export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
@@ -82,10 +100,13 @@ export const userDataSlice = createSlice({
     },
     setPurchaseList: (
       state: UserDataState,
-      action: PayloadAction<PurchaseList>
+      action: PayloadAction<{
+        purchaseList: PurchaseList;
+        listType: PurchaseListType;
+      }>
     ) => {
-      state.status = 'success';
-      state.homePurchaseLists = action.payload;
+      console.log(action);
+      return setList(state, action);
     },
     updatePurchaseListItem: (
       state: UserDataState,

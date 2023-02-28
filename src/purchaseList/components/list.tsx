@@ -61,6 +61,7 @@ export const List: React.FC<ListData> = ({ listType }) => {
         <EditItemForm item={itemEdited} />
       </Modal>
       <Button
+        bTnCenter={false}
         type={isEditMode ? 'danger' : 'primary'}
         name={isEditMode ? 'zakończ' : 'edytuj'}
         clicked={() => setIsEditMode(!isEditMode)}

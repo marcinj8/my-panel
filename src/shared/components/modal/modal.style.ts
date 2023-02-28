@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledModal = styled.div`
   position: fixed;
-  top: 30%;
+  top: 20%;
   left: calc(50% - 300px);
   width: 600px;
   min-height: 300px;
@@ -11,6 +11,9 @@ export const StyledModal = styled.div`
   border-radius: 5px;
   background: ${({ theme }) => theme.bg.secondary};
   box-shadow: 5px 5px 15px black;
+  opacity: 1;
+  transform: translateY(-200);
+  display: none;
   z-index: 99;
 `;
 

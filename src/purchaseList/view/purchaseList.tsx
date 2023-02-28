@@ -14,17 +14,23 @@ export const PurchaseList = () => {
   const [isPrivateList, setIsPrivateList] = useState<boolean>(false);
   const [isAddingNewItem, setIsAddingNewItem] = useState<boolean>(false);
 
-  const { homePurchaseLists, status, message } = useAppSelector(
-    (state) => state.userData
-  );
+  const { homePurchaseLists, privatePurchaseLists, status, message } =
+    useAppSelector((state) => state.userData);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!homePurchaseLists) {
       console.log(homePurchaseLists);
-      dispatch(fetchPurchaseList());
+      dispatch(fetchPurchaseList('home'));
     }
   }, [homePurchaseLists, dispatch]);
+
+  useEffect(() => {
+    if (!privatePurchaseLists) {
+      console.log(privatePurchaseLists);
+      dispatch(fetchPurchaseList('private'));
+    }
+  }, [privatePurchaseLists, dispatch]);
 
   return (
     <HocSection>
@@ -39,6 +45,7 @@ export const PurchaseList = () => {
         <h3>{isPrivateList ? 'prywatna' : 'domowa'} lista zakupów</h3>
         <div>zmień na liste </div>
         <Button
+          bTnCenter={false}
           variant='primary'
           clicked={() => setIsPrivateList(!isPrivateList)}
           name={isPrivateList ? 'domową' : 'prywatną'}

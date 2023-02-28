@@ -2,10 +2,11 @@ import Styled from 'styled-components';
 
 export const StyledAsyncView = Styled.div`
     position: absolute;
+    box-sizing: border-box;
     top: 25%;
-    left: 25%;
-    width: 50%;
-    min-height: 30%;
+    left: calc(50% - 150px);
+    width:  300px;
+    height: 300px;
     background: rgba(0,0,139,.9);
     border: 1px solid white;
     border-radius: 4px;
@@ -62,7 +63,6 @@ export const StyledAsyncTitle = Styled.h2`
     padding: 5% 10px;
     color: white;
 `;
-
 
 export const StyledErrorMessage = Styled.h3`
     padding: 10% 10px;

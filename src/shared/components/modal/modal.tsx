@@ -1,7 +1,9 @@
-import React, { MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler, useEffect, useRef } from 'react';
 import { Button } from '../button';
 
 import { StyledBackdrop, StyledModal } from './modal.style';
+
+import { onModalShow, onModalHide } from './modalAnimations';
 
 interface ModalData {
   children: any;
@@ -30,18 +32,22 @@ export const Modal: React.FC<ModalData> = ({
   onCancel,
   action,
 }) => {
-  useEffect(() => {
-    console.log(show);
-  });
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
-  if (!show) {
-    return null;
-  }
+  useEffect(() => {
+    if (modalRef.current) {
+      if (show) {
+        onModalShow(modalRef.current);
+      } else {
+        onModalHide(modalRef.current);
+      }
+    }
+  });
 
   return (
     <>
       <Backdrop show={show} clicked={onCancel} />
-      <StyledModal>
+      <StyledModal ref={modalRef}>
         <div>{children}</div>
         {action && (
           <Button name={action.actionName} clicked={action.actionFn} />

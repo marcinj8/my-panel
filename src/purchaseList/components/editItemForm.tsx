@@ -21,32 +21,16 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
     const createdInputs: {
       [key: string]: { value: string; isValid: boolean };
     } = {};
+    console.log(!!item);
     inputRequiredData.forEach((itemName) => {
       createdInputs[itemName] = {
         value: item ? item[itemName] : '',
-        isValid: !!item,
+        isValid: itemName === 'description' ? true : !!item,
       };
     });
     return createdInputs;
-    // return {
-    //   name: {
-    //     value: item ? item.name : '',
-    //     isValid: !!item?.name,
-    //   },
-    //   quantity: {
-    //     value: item ? item.quantity : '',
-    //     isValid: !!item?.quantity,
-    //   },
-    //   unit: {
-    //     value: item ? item.unit : '',
-    //     isValid: !!item?.unit,
-    //   },
-    //   description: {
-    //     value: item ? item.description : '',
-    //     isValid: !!item?.description,
-    //   },
-    // };
   };
+
   const { formState, onInput } = UseFrom(createInputs());
 
   return (
@@ -56,6 +40,7 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
         label='nazwa'
         value={formState.inputs.name.value}
+        isValid={formState.inputs.name.isValid}
         type='text'
         name='name'
         onInput={onInput}
@@ -64,28 +49,33 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(1)]}
         label='ilość'
         value={formState.inputs.quantity.value}
+        isValid={formState.inputs.name.isValid}
         type='number'
         name='quantity'
         onInput={onInput}
       />
       <Input
-        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
+        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(2)]}
         label='jednostka'
         value={formState.inputs.unit.value}
+        isValid={formState.inputs.name.isValid}
         type='text'
         name='unit'
         onInput={onInput}
       />
       <Input
-        validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(4)]}
+        validators={[]}
         label='uwagi'
         value={formState.inputs.description.value}
+        isValid={true}
         type='text'
         name='description'
         onInput={onInput}
       />
       <Button
+        disabled={!formState.isFormValid}
         type='confirm'
+        bTnCenter
         name={item ? 'popraw' : 'dodaj'}
         clicked={() => console.log(formState)}
       />

@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   variant = 'primary',
   type = 'primary',
-  bTnCenter = true,
+  bTnCenter = false,
 }) => {
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) {
