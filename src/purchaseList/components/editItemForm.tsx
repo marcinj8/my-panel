@@ -3,12 +3,15 @@ import React from 'react';
 import { PurchaseListItemModel } from '../data/purchaseListData';
 
 import { UseFrom } from '../../shared/hooks/form-hook';
+
 import { Button, Input } from '../../shared/components';
+
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_MIN,
 } from '../../shared/components/input/validators';
+import { createInputs } from '../data/edieItemFormData';
 
 interface EditItemFormData {
   item: PurchaseListItemModel | null;
@@ -17,21 +20,10 @@ interface EditItemFormData {
 const inputRequiredData: string[] = ['name', 'quantity', 'unit', 'description'];
 
 export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
-  const createInputs = () => {
-    const createdInputs: {
-      [key: string]: { value: string; isValid: boolean };
-    } = {};
-    console.log(!!item);
-    inputRequiredData.forEach((itemName) => {
-      createdInputs[itemName] = {
-        value: item ? item[itemName] : '',
-        isValid: itemName === 'description' ? true : !!item,
-      };
-    });
-    return createdInputs;
-  };
-
-  const { formState, onInput } = UseFrom(createInputs());
+  const { formState, onInput } = UseFrom(
+    createInputs(inputRequiredData, item),
+    !!item
+  );
 
   return (
     <form>
@@ -49,7 +41,7 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MIN(1)]}
         label='ilość'
         value={formState.inputs.quantity.value}
-        isValid={formState.inputs.name.isValid}
+        isValid={formState.inputs.quantity.isValid}
         type='number'
         name='quantity'
         onInput={onInput}
@@ -58,7 +50,7 @@ export const EditItemForm: React.FC<EditItemFormData> = ({ item }) => {
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(2)]}
         label='jednostka'
         value={formState.inputs.unit.value}
-        isValid={formState.inputs.name.isValid}
+        isValid={formState.inputs.unit.isValid}
         type='text'
         name='unit'
         onInput={onInput}

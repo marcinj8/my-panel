@@ -1,29 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ErrorModel, UserLoginDataModel } from '../../shared/models';
+import { ErrorModel } from '../../shared/models';
 import { RootState, StatusType } from '../store';
 
-export interface UserState {
-  userData: UserLoginDataModel | null;
+export interface WeatherState {
+  weatherData: any | null;
   status: StatusType;
   message: string | null;
 }
 
-const initialState: UserState = {
-  userData: null,
+// interface WeatherData {
+//     current: {
+
+//     }
+// }
+
+const initialState: WeatherState = {
+  weatherData: null,
   status: 'init',
   message: null,
 };
 
-export const userDataSlice = createSlice({
-  name: 'userData',
+export const weatherSlice = createSlice({
+  name: 'weatherSlice',
   initialState,
   reducers: {
     loading: (state) => {
       state.status = 'loading';
     },
-    succes: (state, action: PayloadAction<UserLoginDataModel>) => {
+    succes: (state, action: PayloadAction<any>) => {
       state.status = 'success';
-      state.userData = action.payload;
+      state.weatherData = action.payload;
     },
     error: (state, action: PayloadAction<ErrorModel>) => {
       state.status = 'error';
@@ -35,15 +41,11 @@ export const userDataSlice = createSlice({
       state.status = 'init';
       state.message = null;
     },
-    logout: (state) => {
-      state.status = 'init';
-      state.userData = null;
-    },
   },
 });
 
-export const { succes, loading, error, logout } = userDataSlice.actions;
+export const { succes, loading, error } = weatherSlice.actions;
 
-export const user = (state: RootState) => state.userData;
+export const user = (state: RootState) => state.weatherSlice;
 
-export default userDataSlice.reducer;
+export default weatherSlice.reducer;

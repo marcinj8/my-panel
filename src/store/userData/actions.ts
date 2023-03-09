@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { PurchaseListItemModel } from '../../purchaseList/data/purchaseListData';
 
 import {
   loading,
@@ -8,12 +9,21 @@ import {
   PurchaseListType,
 } from './reducer';
 
-export const fetchPurchaseList = (listType: PurchaseListType) => {
+export const fetchPurchaseList = (
+  listType: PurchaseListType,
+  id: string,
+  token: string
+) => {
+  console.log(id);
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   return async (dispatch: any) => {
     dispatch(loading());
-    const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists`;
+    const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists?id:${id}`;
     axios
-      .get(link)
+      .get(link, config)
       .then((res: AxiosResponse) =>
         dispatch(
           setPurchaseList({ purchaseList: res.data.purchaseList, listType })
@@ -23,5 +33,16 @@ export const fetchPurchaseList = (listType: PurchaseListType) => {
         console.log(err);
         return dispatch(error({ code: 404 }));
       });
+  };
+};
+
+export const updateListItem = (
+  item: PurchaseListItemModel,
+  listType: PurchaseListType
+) => {
+  return async (dispatch: any) => {
+    dispatch(loading());
+    const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists`;
+    axios.put(link, {});
   };
 };

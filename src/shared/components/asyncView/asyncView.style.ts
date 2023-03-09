@@ -65,6 +65,7 @@ export const StyledAsyncTitle = Styled.h2`
 `;
 
 export const StyledErrorMessage = Styled.h3`
-    padding: 10% 10px;
+    margin: 20% auto;
+    padding: 10px;
     color: white;
 `;

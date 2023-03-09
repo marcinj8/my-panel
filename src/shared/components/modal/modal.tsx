@@ -44,11 +44,12 @@ export const Modal: React.FC<ModalData> = ({
     }
   });
 
+
   return (
     <>
       <Backdrop show={show} clicked={onCancel} />
       <StyledModal ref={modalRef}>
-        <div>{children}</div>
+        <div>{show ? children : null}</div>
         {action && (
           <Button name={action.actionName} clicked={action.actionFn} />
         )}

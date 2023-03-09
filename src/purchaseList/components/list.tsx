@@ -12,7 +12,6 @@ import { EditItemForm } from './editItemForm';
 
 interface ListData {
   listType: 'private' | 'home';
-  listName?: string;
 }
 
 export const List: React.FC<ListData> = ({ listType }) => {
@@ -27,7 +26,7 @@ export const List: React.FC<ListData> = ({ listType }) => {
   );
 
   const list = useMemo(() => {
-    if (lists?.items) {
+    if (lists?.items && lists.items.length > 0) {
       return lists.items.map((item) => {
         return (
           <ListItem
@@ -61,12 +60,13 @@ export const List: React.FC<ListData> = ({ listType }) => {
         <EditItemForm item={itemEdited} />
       </Modal>
       <Button
+        disabled={lists?.items && lists.items.length === 0}
         bTnCenter={false}
         type={isEditMode ? 'danger' : 'primary'}
         name={isEditMode ? 'zakończ' : 'edytuj'}
         clicked={() => setIsEditMode(!isEditMode)}
       />
-      <ul>{list}</ul>
+      {list ? <ul>{list}</ul> : <h3> brak listy</h3>}
     </>
   );
 };

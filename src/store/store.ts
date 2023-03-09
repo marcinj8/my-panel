@@ -5,13 +5,15 @@ import loginrReducer from './loginSlice/reducer';
 import themeReducer from './themeSlice/reducer';
 import userSettingsReducer from './userSettings/reducer';
 import userDataReducer from './userData/reducer';
+import  weatherSlice  from './weatherSlice/reducer';
 
 export const store = configureStore({
   reducer: {
     loginData: loginrReducer,
     themeData: themeReducer,
     userSettings: userSettingsReducer,
-    userData: userDataReducer
+    userData: userDataReducer,
+    weatherSlice: weatherSlice,
   },
 });
 
@@ -23,3 +25,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string | UserLoginDataModel>
 >;
+export type StatusType = 'init' | 'loading' | 'success' | 'error';

@@ -22,26 +22,25 @@ export const BatteryStatus = () => {
   return (
     <>
       <AsyncView status={status} message={null} />
-      {battery.fetched && <div>Battery is on {Math.round(battery.level * 100)}%</div>}
+      {battery.fetched && (
+        <div>Poziom baterii {Math.round(battery.level * 100)}%</div>
+      )}
       {battery.fetched &&
         battery.charging &&
         (battery.chargingTime === 0 ? (
-          <div>Battery is charged.</div>
+          <div>Bateria naładowana.</div>
         ) : (
-          <div>
-            Battery is charging, {timeFormatter(battery.chargingTime)}
-            left.
-          </div>
+          <div>Ładowanie, pozostało {timeFormatter(battery.chargingTime)}</div>
         ))}
       {battery.fetched &&
         !battery.charging &&
         (+battery.dischargingTime > 0 ? (
           <div>
-            Battery will be discharged in
+            Bateria rozładuję się za
             {timeFormatter(battery.dischargingTime)}
           </div>
         ) : (
-          <div>Counting time left to discharge...</div>
+          <div>Sprawdzanie czasu do roładowania baterii...</div>
         ))}
     </>
   );

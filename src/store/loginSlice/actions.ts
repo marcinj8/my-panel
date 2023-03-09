@@ -14,7 +14,7 @@ const config: AxiosRequestConfig = {
 export const checkIsLoggedin = (dispatch: Function) => {
   const userData = localStorage.getItem('userData');
   if (userData) {
-    return dispatch(loginUser(JSON.parse(userData)));
+    return dispatch(succes(JSON.parse(userData)));
   } else {
     return logout();
   }
@@ -25,28 +25,38 @@ export const logoutUser = () => {
   return logout();
 };
 
-export const loginUser = (userData: UserLoginDataModel) => {
+type RegisterMode = 'register' | 'login';
+
+const sendRequest = (userData: UserLoginDataModel, mode: RegisterMode) => {
   return async (dispatch: any) => {
     dispatch(loading());
-    const backendLink = `${process.env.REACT_APP_BACKEND_URL}/user/login`;
+    const link = `${process.env.REACT_APP_BACKEND_URL}/user/${mode}`;
     axios
-      .post(backendLink, { userData: JSON.stringify(userData) }, config)
+      .post(link, { userData: JSON.stringify(userData) }, config)
       .then((res: AxiosRequestConfig) => {
-        // console.log(res);
-        localStorage.setItem('userData', JSON.stringify(res.data.userData));
+        localStorage.setItem('userData', JSON.stringify({ ...res.data }));
         return dispatch(
           succes({
-            id: res.data.userData.id,
-            email: res.data.userData.email,
-            name: res.data.userData.name,
+            id: res.data.id,
+            email: res.data.email,
+            name: res.data.name,
+            homeId: res.data.homeId,
+            token: res.data.token,
           })
         );
       })
       .catch((err: AxiosError) => {
-        // console.log(err);
         return dispatch(error({ code: 404 }));
       });
   };
+};
+
+export const registerUser = (userData: UserLoginDataModel) => {
+  return sendRequest(userData, 'register');
+};
+
+export const loginUser = (userData: UserLoginDataModel) => {
+  return sendRequest(userData, 'login');
 };
 
 // store.dispatch(checkIsLoggedin);

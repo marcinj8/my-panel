@@ -1,16 +1,20 @@
 import axios from 'axios';
+import { error, loading, succes } from './reducer';
 
 const getData = (link: string) => {
-  axios
-    .get(link)
-    .then((res) => {
-      // console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      // console.log(err, err.message, 'weather getting error');
-      return err;
-    });
+  return async (dispatch: any) => {
+    dispatch(loading());
+    axios
+      .get(link)
+      .then((res) => {
+        console.log(res);
+        dispatch(succes(res.data));
+      })
+      .catch((err) => {
+        console.log(err, err.message, 'weather getting error');
+        dispatch(error(err));
+      });
+  };
 };
 
 export const getCityWeather = (city: string) => {

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PurchaseListItemModel } from '../../purchaseList/data/purchaseListData';
 import { ErrorModel } from '../../shared/models';
-import { RootState } from '../store';
+import { RootState, StatusType } from '../store';
 
 interface Location {
   latitude: number;
@@ -20,7 +20,7 @@ interface PurchaseList {
 
 export interface UserDataState {
   [key: string]: any;
-  status: 'loading' | 'success' | 'init' | 'error';
+  status: StatusType
   message: string | null;
   location: null | Location;
   privatePurchaseLists: null | PurchaseList;
@@ -71,6 +71,7 @@ const setList = (
   const listType = (action.payload.listType + 'PurchaseLists') as string;
   const listUpdated = { ...action.payload.purchaseList };
   const stateUpdated = { ...state };
+
   stateUpdated.status = 'success';
   stateUpdated[listType] = { ...listUpdated };
 
@@ -105,7 +106,6 @@ export const userDataSlice = createSlice({
         listType: PurchaseListType;
       }>
     ) => {
-      console.log(action);
       return setList(state, action);
     },
     updatePurchaseListItem: (

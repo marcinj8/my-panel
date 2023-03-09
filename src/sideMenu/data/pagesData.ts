@@ -6,4 +6,5 @@ export const pagesData = [
   { link: './purchase-lists', name: 'zakupy' },
   { link: './currency', name: 'waluty' },
   { link: './finances', name: 'finanse' },
+  { link: './recipes', name: 'przepisy' },
 ];

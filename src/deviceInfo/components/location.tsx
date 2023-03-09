@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getFullCityWeather } from '../../weather/data/weatherData';
+
 import { getLocation } from '../data/locationData';
 
 export const Location = () => {
@@ -7,17 +7,10 @@ export const Location = () => {
     longitude: number;
     latitude: number;
   }>(null);
-  let weather = useRef<any>(null);
 
   useEffect(() => {
     if (!location) {
       getLocation(setLocation);
-    }
-    if (location) {
-      weather.current = getFullCityWeather(
-        location.latitude,
-        location.longitude
-      );
     }
   }, [location]);
 

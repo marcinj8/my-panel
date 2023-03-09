@@ -16,21 +16,29 @@ export const PurchaseList = () => {
 
   const { homePurchaseLists, privatePurchaseLists, status, message } =
     useAppSelector((state) => state.userData);
+  const usersIds = useAppSelector((state) => {
+    if (state.loginData?.userData) {
+      return {
+        id: state.loginData?.userData.id,
+        homeId: state.loginData?.userData.homeId,
+        token: state.loginData?.userData.token,
+      };
+    }
+  });
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!homePurchaseLists) {
-      console.log(homePurchaseLists);
-      dispatch(fetchPurchaseList('home'));
+    if (!homePurchaseLists && usersIds) {
+      dispatch(fetchPurchaseList('home', usersIds.homeId, usersIds.token));
     }
-  }, [homePurchaseLists, dispatch]);
+  }, [homePurchaseLists, usersIds, dispatch]);
 
   useEffect(() => {
-    if (!privatePurchaseLists) {
-      console.log(privatePurchaseLists);
-      dispatch(fetchPurchaseList('private'));
+    if (!privatePurchaseLists && usersIds) {
+      dispatch(fetchPurchaseList('private', usersIds.id, usersIds.token));
     }
-  }, [privatePurchaseLists, dispatch]);
+  }, [privatePurchaseLists, usersIds, dispatch]);
 
   return (
     <HocSection>

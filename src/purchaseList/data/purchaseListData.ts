@@ -4,7 +4,7 @@ import {
 } from '../../store/userData/reducer';
 
 export interface PurchaseListItemModel {
-  [key:string]: any;
+  [key: string]: any;
   id: string;
   name: string;
   quantity: number;
@@ -13,6 +13,8 @@ export interface PurchaseListItemModel {
   listName: string;
   added: Date;
   purchased: boolean;
+  userId?: string;
+  homeId?: string;
 }
 
 export const tooglePurchaseProperty = (

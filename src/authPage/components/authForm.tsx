@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { Button, Input } from '../../shared/components';
 
 import { UseFrom } from '../../shared/hooks/form-hook';
-import { loginUser } from '../../store/loginSlice/actions';
+import { loginUser, registerUser } from '../../store/loginSlice/actions';
 
 import { StyledAuthForm } from '../style/auth.style';
 import { switchAuthMode } from '../data/authData';
@@ -13,6 +13,7 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
 } from '../../shared/components/input/validators';
+import { UserLoginDataModel } from '../../shared/models';
 
 interface AuthFromData {
   isLoginMode: boolean;
@@ -40,12 +41,20 @@ export const AuthForm: React.FC<AuthFromData> = ({
   );
 
   const onAuthHandler = () => {
-    // console.log(formState);
-    const userData = {
-      email: formState.inputs.email.value.toString(), // zastąpić => foreach formstate.inputs
-      password: formState.inputs.password.value.toString(),
-    };
-    dispatch(loginUser(userData));
+    const userData: any = {};
+    Object.keys(formState.inputs).forEach((item) => {
+      if (formState.inputs[item]) {
+        console.log(item);
+        userData[item] = formState.inputs[item].value;
+      }
+    });
+    console.log(userData);
+
+    if (isLoginMode) {
+      return dispatch(loginUser(userData));
+    } else {
+      return dispatch(registerUser(userData));
+    }
   };
 
   useEffect(() => {
@@ -80,8 +89,20 @@ export const AuthForm: React.FC<AuthFromData> = ({
         name='password'
         onInput={onInput}
       />
+      {!isLoginMode && (
+        <Input
+          validators={[]}
+          label='id domu'
+          value=''
+          isValid={true}
+          type='text'
+          name='homeId'
+          onInput={onInput}
+        />
+      )}
       <Button
         disabled={!formState.isFormValid}
+        bTnCenter
         type='confirm'
         name='dalej'
         clicked={onAuthHandler}
@@ -89,6 +110,7 @@ export const AuthForm: React.FC<AuthFromData> = ({
       <h5>{!isLoginMode ? 'masz konto?' : 'nie masz konta?'}</h5>
       <Button
         variant='inline'
+        bTnCenter
         name={`${isLoginMode ? 'zarejestruj' : 'zaloguj'} się`}
         clicked={() => setIsLoginMode((prev: boolean) => !prev)}
       />

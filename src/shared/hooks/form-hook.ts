@@ -22,7 +22,7 @@ type Action =
 const onInputChange = (
   state: FormState,
   name: string,
-  value: any, //to solve, expected string | number
+  value: string | number,
   isValid: boolean
 ) => {
   let isFormValid = true;
