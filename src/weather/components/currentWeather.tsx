@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
+import { WEATHER_DESC_TRANSLATE } from '../../shared/data/constVariables';
 
 import {
   StyledCurrentWeather,
@@ -9,22 +10,29 @@ import {
   StyledCurrentWeatherImg,
 } from '../style/currentWeather.style';
 
-const CurrentWeather: React.FC<{ city: String, currentWeather: any }> = ({
-  city,
-  currentWeather,
-}) => {
+export const CurrentWeather: React.FC<{
+  currentWeather: any;
+  city?: String;
+}> = ({ city, currentWeather }) => {
+  const weathereDesc = useMemo(() => {
+    let description = WEATHER_DESC_TRANSLATE.find((desc) => {
+      return desc.eng === currentWeather.weather[0].description;
+    });
+    return description;
+  }, [currentWeather.weather]);
+  
   return (
     <StyledCurrentWeather>
       <div>
-        <StyledCurrentWeatherTitle>{city}</StyledCurrentWeatherTitle>
+        {/* <StyledCurrentWeatherTitle>{city}</StyledCurrentWeatherTitle> */}
         <StyledCurrentWeatherBigData>
-          {Math.round(currentWeather.temp)}°
+          {Math.round(currentWeather.temp)}°C
         </StyledCurrentWeatherBigData>
         <StyledCurrentWeatherTitle>
-          {currentWeather.weather[0].description}
+          {weathereDesc ? weathereDesc.pl : 'brak danych'}
         </StyledCurrentWeatherTitle>
         <StyledCurrentWeatherData>
-          Feels like {Math.round(currentWeather.feels_like)}°
+          Temperatura odczuwalna to {Math.round(currentWeather.feels_like)}° C.
         </StyledCurrentWeatherData>
       </div>
       <div style={{ overflow: 'hidden', width: '50%', height: '100%' }}>
@@ -36,5 +44,3 @@ const CurrentWeather: React.FC<{ city: String, currentWeather: any }> = ({
     </StyledCurrentWeather>
   );
 };
-
-export default CurrentWeather;

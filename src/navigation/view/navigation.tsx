@@ -25,7 +25,7 @@ export const Navigation = () => {
       <Button
         bTnCenter={false}
         type='danger'
-        name='logout'
+        name='wyloguj'
         clicked={() => dispatch(logoutUser())}
       />
     </StyledNav>

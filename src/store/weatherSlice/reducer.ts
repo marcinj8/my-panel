@@ -2,22 +2,35 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorModel } from '../../shared/models';
 import { RootState, StatusType } from '../store';
 
-export interface WeatherState {
-  weatherData: any | null;
-  status: StatusType;
-  message: string | null;
+export interface CurrentWeatherDataModel {
+  sunrise: number;
+  sunset: number;
+  wind_speed: number;
+  humidity: number;
+  pressure: number;
 }
 
-// interface WeatherData {
-//     current: {
+export interface WeatherData {
+  current: CurrentWeatherDataModel;
+  minutely: { precipitation: number; dt: number }[];
+  hourly: any[];
+  daily: any[];
+  timezone: string;
+  timezone_offset: number;
+}
 
-//     }
-// }
+export interface WeatherState {
+  weatherData: WeatherData | null;
+  status: StatusType;
+  message: string | null;
+  dateFetchedData: number | null;
+}
 
 const initialState: WeatherState = {
   weatherData: null,
   status: 'init',
   message: null,
+  dateFetchedData: null,
 };
 
 export const weatherSlice = createSlice({
@@ -30,6 +43,7 @@ export const weatherSlice = createSlice({
     succes: (state, action: PayloadAction<any>) => {
       state.status = 'success';
       state.weatherData = action.payload;
+      state.dateFetchedData = new Date().getTime();
     },
     error: (state, action: PayloadAction<ErrorModel>) => {
       state.status = 'error';
@@ -40,6 +54,8 @@ export const weatherSlice = createSlice({
     setInit: (state) => {
       state.status = 'init';
       state.message = null;
+      state.dateFetchedData = null;
+      state.weatherData = null;
     },
   },
 });

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const StyledHocSection = styled.section<{ isMenuShow: boolean }>`
   position: absolute;
-  height: 100vh;
-  padding: 8vh 0 0 0;
+  min-height: 100vh;
+  padding: 7vh 0 0 0;
   right: 0;
-  background: purple;
+  background: ${({theme}) => theme.bg.main};
   width: 100%;
   margin: 0;
   transition: all 0.3s;

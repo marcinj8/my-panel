@@ -12,6 +12,11 @@ export const themes = {
       secondary: 'silver',
       danger: 'red',
     },
+    bgMenu: {
+      main: 'lightblue',
+      secondary: 'silver',
+      danger: 'red',
+    },
     btBg: {
       danger: 'pink',
       primary: 'white',
