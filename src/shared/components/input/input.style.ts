@@ -16,7 +16,7 @@ export const StyledInput = styled.input`
   width: 200px;
   padding: 5px;
   margin: 5px auto;
-  box-shadow: 1px 2px 3px;
+  box-shadow: 1px 2px 3px black;
   background: ${({ theme }) => theme.bg.main};
   color: ${({ theme }) => theme.color.main};
   border: ${({ theme }) => '1px solid ' + theme.border.main};

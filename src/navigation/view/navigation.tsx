@@ -20,7 +20,7 @@ export const Navigation = () => {
         clicked={() => dispatch(toggleMenu(!isMenuShow))}
       />
       <div style={{ padding: '10px' }}>
-        Today {day}/{month}/{year}
+        {day}/{month}/{year}
       </div>
       <Button
         bTnCenter={false}

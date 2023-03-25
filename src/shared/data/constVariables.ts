@@ -4,7 +4,7 @@ export const WEEKDAY = [
     'Wtorek',
     'Środa',
     'Czwartek',
-    'Piatek',
+    'Piątek',
     'Sobota',
   ];
   

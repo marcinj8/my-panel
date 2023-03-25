@@ -24,7 +24,7 @@ export const HourlyForecastWeather: React.FC<{ hourlyForecast: any[] }> = ({
               : hour + ':00'}
           </StyledHourlyForecastDate>
           <StyledHourlyForecastTemp>
-            {Math.round(forecast.temp)}° C
+            {Math.round(forecast.temp)}°
           </StyledHourlyForecastTemp>
         </StyledHourForecast>
       );

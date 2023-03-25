@@ -62,7 +62,7 @@ export const List: React.FC<ListData> = ({ listType }) => {
       <Button
         disabled={lists?.items && lists.items.length === 0}
         bTnCenter={false}
-        type={isEditMode ? 'danger' : 'primary'}
+        type={isEditMode ? 'danger' : 'main'}
         name={isEditMode ? 'zakończ' : 'edytuj'}
         clicked={() => setIsEditMode(!isEditMode)}
       />

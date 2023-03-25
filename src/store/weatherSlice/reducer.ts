@@ -8,19 +8,33 @@ export interface CurrentWeatherDataModel {
   wind_speed: number;
   humidity: number;
   pressure: number;
+  uvi: number;
 }
 
-export interface WeatherData {
+export interface HourlyWeatherModel {
+  dt: number;
+  clouds: number;
+  feels_like: string;
+  humidity: number;
+  pressure: number;
+  temp: number;
+  weather: {
+    description: string;
+    icon: string;
+  }[];
+}
+
+export interface WeatherDataModel {
   current: CurrentWeatherDataModel;
   minutely: { precipitation: number; dt: number }[];
-  hourly: any[];
+  hourly: HourlyWeatherModel[];
   daily: any[];
   timezone: string;
   timezone_offset: number;
 }
 
 export interface WeatherState {
-  weatherData: WeatherData | null;
+  weatherData: WeatherDataModel | null;
   status: StatusType;
   message: string | null;
   dateFetchedData: number | null;

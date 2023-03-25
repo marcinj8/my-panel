@@ -9,19 +9,28 @@ import { pagesData } from '../data';
 
 import { StyledSideMenu, StyledSideMenuItem } from '../style/sideMenu.style';
 import { Backdrop } from '../../shared/components/modal/modal';
+import { useLocation } from 'react-router';
 
 export const SideMenu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isMenuShow } = useAppSelector((state) => state.userSettings);
+  let { pathname } = useLocation();
 
   const sideMenuRef = useRef<HTMLElement>(null);
   const navLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const links = pagesData.map((item) => (
-    <StyledSideMenuItem key={item.name} ref={navLinkRef} to={item.link}>
-      {item.name}
-    </StyledSideMenuItem>
-  ));
+  const links = pagesData.map((item) => {
+    return (
+      <StyledSideMenuItem
+        key={item.name}
+        ref={navLinkRef}
+        to={item.link}
+        selected={item.link === pathname}
+      >
+        {item.name}
+      </StyledSideMenuItem>
+    );
+  });
 
   useEffect(() => {
     if (sideMenuRef.current === null) {

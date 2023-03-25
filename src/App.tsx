@@ -8,15 +8,18 @@ import { Navigation } from './navigation';
 import { SideMenu } from './sideMenu';
 import { Auth } from './authPage';
 import { PurchaseList } from './purchaseList';
+import { Weather } from './weather/view/weather';
+import { SettingsPageView } from './settingsPage';
 
 import { checkIsLoggedin } from './store/loginSlice/actions';
 
 import './App.css';
-import { Weather } from './weather/view/weather';
+import { checkTheme } from './store/themeSlice/actions';
 
 function App() {
   const isLoggedin = useAppSelector((state) => state.loginData.userData);
   const theme = useAppSelector((state) => state.themeData);
+
   const dispatch = useAppDispatch();
 
   const routers = useMemo(() => {
@@ -29,6 +32,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/weather' element={<Weather />} />
             <Route path='/purchase-lists' element={<PurchaseList />} />
+            <Route path='/settings' element={<SettingsPageView />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
         </>
@@ -45,7 +49,10 @@ function App() {
 
   useEffect(() => {
     checkIsLoggedin(dispatch);
-  }, []);
+  }, [dispatch]);
+  useEffect(() => {
+    checkTheme(dispatch);
+  }, [dispatch]);
 
   return (
     <div className='App'>

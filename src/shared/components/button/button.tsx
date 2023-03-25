@@ -6,7 +6,7 @@ import {
   StyledButtonInline,
 } from './button.style';
 
-type ButtonType = 'danger' | 'primary' | 'secondary' | 'confirm';
+type ButtonType = 'danger' | 'main' | 'secondary' | 'confirm';
 
 interface ButtonProps {
   name: string;
@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
   clicked,
   disabled = false,
   variant = 'primary',
-  type = 'primary',
+  type = 'main',
   bTnCenter = false,
 }) => {
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

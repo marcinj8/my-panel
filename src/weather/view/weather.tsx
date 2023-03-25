@@ -3,19 +3,18 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { AsyncView } from '../../shared/components/asyncView';
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
-import { CurrentWeather } from '../components/currentWeather';
-import { DailyForecastWeather } from '../components/dailyWeatherForecast';
-import { CurrentWeatherDetails } from '../components/currentWeatherDetails';
-import { HourlyForecastWeather } from '../components/hourlyWeatherForecast';
+import { Button, Modal } from '../../shared/components';
 
 import { getLocation } from '../../deviceInfo/data/locationData';
 import { getFullCityWeather } from '../../store/weatherSlice/actions';
+import { FullWeatherView } from '../components/fullWeatherView';
 
 export const Weather: React.FC = () => {
   const [location, setLocation] = useState<null | {
     longitude: number;
     latitude: number;
   }>(null);
+  const [showList, setShowList] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const weather = useAppSelector((state) => state.weatherSlice);
@@ -32,24 +31,19 @@ export const Weather: React.FC = () => {
     }
   }, [location, dispatch, weather.weatherData]);
 
-  console.log(location, weather);
-
   return (
     <HocSection>
       <>
         <AsyncView status={weather.status} message={weather.message} />
+        <Modal show={showList} onCancel={() => setShowList(false)}>
+          <h3>wybierz lokalizacje</h3>
+        </Modal>
+        <header>
+          <h3>Pogoda dla Twojej lokalizacji</h3>
+          <Button name='lista' clicked={() => setShowList(true)} />
+        </header>
         {weather.weatherData && (
-          <>
-            <CurrentWeather currentWeather={weather.weatherData.current} />
-            <HourlyForecastWeather
-              hourlyForecast={weather.weatherData.hourly}
-            />
-            <DailyForecastWeather dailyForecast={weather.weatherData.daily} />
-            <CurrentWeatherDetails
-              currentDetails={weather.weatherData.current}
-              precipitation={weather.weatherData.minutely[0].precipitation}
-            />
-          </>
+          <FullWeatherView weatherData={weather.weatherData} />
         )}
       </>
     </HocSection>

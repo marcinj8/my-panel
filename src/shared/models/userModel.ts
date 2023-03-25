@@ -5,8 +5,8 @@ export interface UserLoginDataModel {
   homeId: string;
   email: string;
   token: string;
+  tokenExpiration: number;
   password?: string;
   weatherCities?: string[];
   currency?: string[];
-  // add token to storage data?
 }

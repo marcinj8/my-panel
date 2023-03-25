@@ -29,16 +29,16 @@ export const PurchaseList = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!homePurchaseLists && usersIds) {
+    if (!homePurchaseLists && usersIds && status !== 'error') {
       dispatch(fetchPurchaseList('home', usersIds.homeId, usersIds.token));
     }
-  }, [homePurchaseLists, usersIds, dispatch]);
+  }, [homePurchaseLists, usersIds, status, dispatch]);
 
   useEffect(() => {
-    if (!privatePurchaseLists && usersIds) {
+    if (!privatePurchaseLists && usersIds && status !== 'error') {
       dispatch(fetchPurchaseList('private', usersIds.id, usersIds.token));
     }
-  }, [privatePurchaseLists, usersIds, dispatch]);
+  }, [privatePurchaseLists, usersIds, status, dispatch]);
 
   return (
     <HocSection>

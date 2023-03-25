@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 import { themes } from '../../shared/themes/themes';
+export type CurrentThemeType = 'dark' | 'default';
 
 export interface ThemeState {
   themes: { [key: string]: {} };
-  currentTheme: string;
+  currentTheme: CurrentThemeType;
 }
 
 const initialState: ThemeState = {
@@ -17,7 +18,7 @@ export const themeSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<string>) => {
+    setTheme: (state, action: PayloadAction<'dark' | 'default'>) => {
       state.currentTheme = action.payload;
     },
   },

@@ -8,9 +8,10 @@ export const StyledListItem = styled.li<{ purchased: boolean }>`
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 6px 2px 8px;
+  box-shadow: 6px 2px 8px black;
   background: ${({ theme, purchased }) =>
     purchased ? 'green' : theme.bg.secondary};
+  color: ${({ theme }) => theme.color.main};
   transition: all 0.2s ease-in-out;
   text-align: center;
   &:hover {
