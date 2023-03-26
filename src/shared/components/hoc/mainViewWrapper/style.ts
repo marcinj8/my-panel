@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledHocSection = styled.section<{ isMenuShow: boolean }>`
   position: absolute;
   min-height: 100vh;
-  padding: 7vh 0 0 0;
+  padding: 80px 0 0 0;
   right: 0;
   background: ${({theme}) => theme.bg.main};
   width: 100%;

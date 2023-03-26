@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const StyledSideMenu = styled.menu`
   position: fixed;
-  top: 6vh;
+  top: 60px;
   width: 300px;
   height: 100vh;
   border-right: 1px solid black;

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { WEATHER_DESC_TRANSLATE } from '../../shared/data/constVariables';
+import { WEATHER_DESC } from '../../shared/data/constVariables';
 
 import {
   StyledCurrentWeather,
@@ -15,7 +15,7 @@ export const CurrentWeather: React.FC<{
   city?: String;
 }> = ({ city, currentWeather }) => {
   const weathereDesc = useMemo(() => {
-    let description = WEATHER_DESC_TRANSLATE.find((desc) => {
+    let description = WEATHER_DESC.find((desc) => {
       return desc.eng === currentWeather.weather[0].description;
     });
     return description;

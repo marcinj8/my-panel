@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledNav = styled.nav`
   position: fixed;
   width: 100%;
-  height: 6vh;
+  height: 60px;
   padding: 5px;
   background: ${({ theme }) => theme.bgMenu.secondary};
   color: ${({ theme }) => theme.color.main};
