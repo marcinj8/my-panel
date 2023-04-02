@@ -44,6 +44,7 @@ export const SettingsPageView = () => {
         >
           {options}
         </StyledSelect>
+        <h3> Edytuj listę maist - pogoda</h3>
       </>
     </HocSection>
   );

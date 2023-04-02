@@ -1,3 +1,11 @@
+export interface WeatherCityModel {
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export interface UserLoginDataModel {
   [key: string]: any;
   name: string;
@@ -7,6 +15,6 @@ export interface UserLoginDataModel {
   token: string;
   tokenExpiration: number;
   password?: string;
-  weatherCities?: string[];
+  weatherCities?: WeatherCityModel[];
   currency?: string[];
 }

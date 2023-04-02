@@ -19,6 +19,7 @@ export const WeatherShortInfo: React.FC<{ weather: WeatherDataModel }> = ({
 
   return (
     <div>
+      <div>Teraz jest {advice?.pl}</div>
       <div>{advice?.advice.now}</div>
 
     </div>

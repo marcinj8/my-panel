@@ -31,5 +31,4 @@ export const StyledSideMenuItem = styled(NavLink)<{ selected?: boolean }>`
     background: ${({ theme }) => theme.bgMenuHover.secondary};
     transform: scale(1.02);
   }
-  
 `;

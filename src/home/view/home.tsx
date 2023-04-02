@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { DeviceInfo } from '../../deviceInfo';
 
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
-import { getLocation } from '../../deviceInfo/data/locationData';
+import { getLocation, getPlaceLocation } from '../../deviceInfo/data/locationData';
 import { getFullCityWeather } from '../../store/weatherSlice/actions';
 import { WeatherShortInfo } from '../../weather/components/weatherShortInfo';
 

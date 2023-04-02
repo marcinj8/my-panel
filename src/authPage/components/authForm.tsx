@@ -48,7 +48,6 @@ export const AuthForm: React.FC<AuthFromData> = ({
         userData[item] = formState.inputs[item].value;
       }
     });
-    console.log(userData);
 
     if (isLoginMode) {
       return dispatch(loginUser(userData));
