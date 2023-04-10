@@ -1,56 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { AsyncView } from '../../shared/components/asyncView';
 import { HocSection } from '../../shared/components/hoc/mainViewWrapper/view';
-import { Button, Modal } from '../../shared/components';
 
-import { getLocation } from '../../deviceInfo/data/locationData';
 import { getFullCityWeather } from '../../store/weatherSlice/actions';
 import { FullWeatherView } from '../components/fullWeatherView';
-import { AddNewCityForm } from '../components/addNewCityForm';
+import { CitiesListMenager } from '../components/citiesListMenager';
 
 export const Weather: React.FC = () => {
-  const [location, setLocation] = useState<null | {
-    longitude: number;
-    latitude: number;
-  }>(null);
-  const [showList, setShowList] = useState<boolean>(false);
-  const [showAddCity, setShowAddCity] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   const weather = useAppSelector((state) => state.weatherSlice);
 
   useEffect(() => {
-    if (!location) {
-      getLocation(setLocation);
+    if (weather.currentDisplayed !== null && weather.weatherData === null) {
+      dispatch(getFullCityWeather(weather.currentDisplayed));
     }
-  }, [location]);
-
-  useEffect(() => {
-    if (location && !weather.weatherData) {
-      dispatch(getFullCityWeather(location.latitude, location.longitude));
-    }
-  }, [location, dispatch, weather.weatherData]);
+  }, [weather.currentDisplayed, weather.weatherData, dispatch]);
 
   return (
     <HocSection>
       <>
-        <AsyncView status={weather.status} message={weather.message} />
-        <Modal
-          show={showList && !showAddCity}
-          onCancel={() => setShowList(false)}
-        >
-          <h3>wybierz lokalizacje</h3>
-          <Button name='dodaj miasto' clicked={() => setShowAddCity(true)} />
-        </Modal>
-        <Modal show={showAddCity} onCancel={() => setShowAddCity(false)}>
-          <AddNewCityForm />
-        </Modal>
+        <CitiesListMenager />
         <header>
-          <h3>Pogoda dla Twojej lokalizacji</h3>
-          <Button name='lista' clicked={() => setShowList(true)} />
-          <Button name='dodaj miasto' clicked={() => setShowAddCity(true)} />
+          {weather.currentDisplayed ? (
+            <h3>Pogoda - {weather.currentDisplayed.name}</h3>
+          ) : (
+            <h3>wybierz miejsce</h3>
+          )}
         </header>
         {weather.weatherData && (
           <FullWeatherView weatherData={weather.weatherData} />

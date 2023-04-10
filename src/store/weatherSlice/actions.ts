@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { error, loading, succes } from './reducer';
+import { CityDataModel } from '../userData/reducer';
 
 const getData = (link: string) => {
   return async (dispatch: any) => {
@@ -23,8 +24,9 @@ export const getCityWeather = (city: string) => {
   return getData(link);
 };
 
-export const getFullCityWeather = (lat: number | null, lon: number | null) => {
-  const link = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
+export const getFullCityWeather = (position: CityDataModel) => {
+  const { latitude, longitude } = { ...position.location };
+  const link = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
 
   return getData(link);
 };

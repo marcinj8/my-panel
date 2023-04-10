@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { Button, Input } from '../../shared/components';
+import { AsyncView } from '../../shared/components/asyncView';
 
 import { UseFrom } from '../../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../../shared/components/input/validators';
 import { getPlaceLocation } from '../../deviceInfo/data/locationData';
 
-export const AddNewCityForm = () => {
+import {
+  StyledCitiesResultSection,
+  StyledCitiesResultList,
+  StyledCitiesResultListItem,
+} from '../style/addNewCityForm.style';
+
+import { StatusType } from '../../store/store';
+import { addNewCityWeather } from '../../store/userData/actions';
+
+export const AddNewCityForm: React.FC<{ onCloseForm: Function }> = ({
+  onCloseForm,
+}) => {
+  const [localStatus, setLocalStatus] = useState<StatusType>('init');
   const [multipleResponse, setMultipleResponse] = useState<any | null>(null);
+
+  const token = useAppSelector((state) =>
+    state.loginData.userData?.token ? state.loginData.userData?.token : ''
+  );
+  const dispatch = useAppDispatch();
+
   const { formState, onInput } = UseFrom(
     {
       city: {
@@ -19,18 +39,46 @@ export const AddNewCityForm = () => {
   );
 
   const onAddHandler = async () => {
-    console.log(formState);
     const response = await getPlaceLocation(
       formState.inputs.city.value as string
     );
-    console.log(response);
+    if (!Array.isArray(response) || response.length === 0) {
+      setLocalStatus('error');
+    }
     if (response.length > 1) {
       setMultipleResponse(response);
+    } else {
+      const newCity = {
+        name: response[0].formatted_address,
+        location: {
+          latitude: response[0].geometry.location.lat,
+          longitude: response[0].geometry.location.lng,
+        },
+      };
+      dispatch(addNewCityWeather(newCity, token));
+      onCloseForm();
     }
   };
-  console.log(multipleResponse);
+
+  const onChooseCityHandler = (city: any) => {
+    const newCity = {
+      name: city.formatted_address,
+      location: {
+        latitude: city.geometry.location.lat,
+        longitude: city.geometry.location.lng,
+      },
+    };
+    dispatch(addNewCityWeather(newCity, token));
+    onCloseForm();
+  };
+
   return multipleResponse === null ? (
     <form style={{ padding: '25px' }}>
+      <AsyncView
+        status={localStatus}
+        message={null}
+        onCancel={() => setLocalStatus('init')}
+      />
       <Input
         validators={[VALIDATOR_REQUIRE()]}
         label='dodaj miejsce'
@@ -49,20 +97,20 @@ export const AddNewCityForm = () => {
       />
     </form>
   ) : (
-    <div>
+    <StyledCitiesResultSection>
       <h3>wybierz</h3>
-      <ul>
+      <StyledCitiesResultList>
         {multipleResponse.map((address: any) => (
-          <li
-            style={{ color: 'white', margin: '10px auto' }}
+          <StyledCitiesResultListItem
+            onClick={() => onChooseCityHandler(address)}
             key={address.place_id}
           >
-            {address.formatted_address},{' '}
+            {address.address_components[0].long_name},{' '}
             {address.address_components[1].long_name},{' '}
             {address.address_components[2].long_name}
-          </li>
+          </StyledCitiesResultListItem>
         ))}
-      </ul>
-    </div>
+      </StyledCitiesResultList>
+    </StyledCitiesResultSection>
   );
 };

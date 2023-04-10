@@ -15,7 +15,7 @@ export const WeatherShortInfo: React.FC<{ weather: WeatherDataModel }> = ({
     return description;
   }, [weather]);
 
-  console.log(currentTime, advice);
+  console.log(weather.hourly[0].weather[0].description, advice);
 
   return (
     <div>

@@ -42,8 +42,7 @@ export const Modal: React.FC<ModalData> = ({
         onModalHide(modalRef.current);
       }
     }
-  });
-
+  }, [show]);
 
   return (
     <>

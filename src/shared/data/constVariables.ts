@@ -73,6 +73,18 @@ export const WEATHER_DESC = [
     },
   },
   {
+    eng: 'overcast clouds',
+    pl: 'pochmurnie',
+    advice: {
+      now: 'Lepiej',
+      morning: '',
+      noon: '',
+      afternoon: '',
+      evening: '',
+      night: '',
+    },
+  },
+  {
     eng: 'broken clouds',
     pl: 'duże zachmurzenie',
     advice: {

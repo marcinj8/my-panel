@@ -5,8 +5,9 @@ import {
   loading,
   setPurchaseList,
   error,
-  setInit,
   PurchaseListType,
+  CityDataModel,
+  addCity,
 } from './reducer';
 
 export const fetchPurchaseList = (
@@ -44,5 +45,23 @@ export const updateListItem = (
     dispatch(loading());
     const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists`;
     axios.put(link, {});
+  };
+};
+
+export const addNewCityWeather = (location: CityDataModel, token: string) => {
+  return async (dispatch: any) => {
+    dispatch(loading());
+    const link = `${process.env.REACT_APP_BACKEND_URL}/user/weather-cities/add`;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .post(link, { location: JSON.stringify(location) }, config)
+      .then((res) => {
+        const addedLocation = JSON.parse(res.data.location)
+        console.log(addedLocation);
+        return dispatch(addCity(location));
+      })
+      .catch((err) => console.log(err));
   };
 };

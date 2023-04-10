@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+import { Button } from '../button';
 import {
   StyledAsyncView,
   StyledSpinner,
@@ -9,9 +11,10 @@ import {
 interface AsyncViewData {
   status: string;
   message: string | null;
+  onCancel?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const AsyncView: React.FC<AsyncViewData> = ({ status, message }) => {
+const AsyncView: React.FC<AsyncViewData> = ({ status, message, onCancel }) => {
   if (status !== 'loading' && status !== 'error') {
     return null;
   }
@@ -31,6 +34,7 @@ const AsyncView: React.FC<AsyncViewData> = ({ status, message }) => {
                 Error occured, please try again later.
               </StyledErrorMessage>
             )}
+            {onCancel && <Button name='zamknij' clicked={onCancel} />}
           </>
         )}
       </StyledAsyncView>

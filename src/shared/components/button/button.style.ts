@@ -35,6 +35,8 @@ export const StyledButtonPrimary = styled(StyledButtonDefault)`
 
 export const StyledButtonInline = styled(StyledButtonDefault)`
   background: transparent;
+  display: inline-block;
+  width: auto;
   color: ${({ theme, btnType }) => theme.color[btnType]};
   border: none;
   &:disabled {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { ThemeProvider } from 'styled-components';
@@ -15,10 +15,19 @@ import { checkIsLoggedin } from './store/loginSlice/actions';
 
 import './App.css';
 import { checkTheme } from './store/themeSlice/actions';
+import { getLocation } from './deviceInfo/data/locationData';
+import { getFullCityWeather } from './store/weatherSlice/actions';
+import { setCurrentDisplayed } from './store/weatherSlice/reducer';
+import { CityDataModel, setUserLocation } from './store/userData/reducer';
 
 function App() {
+  const [currentPositon, setCurrentPositon] = useState<null | CityDataModel>(
+    null
+  );
+
   const isLoggedin = useAppSelector((state) => state.loginData.userData);
   const theme = useAppSelector((state) => state.themeData);
+  const weather = useAppSelector((state) => state.weatherSlice);
 
   const dispatch = useAppDispatch();
 
@@ -50,9 +59,34 @@ function App() {
   useEffect(() => {
     checkIsLoggedin(dispatch);
   }, [dispatch]);
+
   useEffect(() => {
     checkTheme(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!currentPositon) {
+      getLocation(setCurrentPositon);
+    }
+  }, [currentPositon]);
+
+  useEffect(() => {
+    if (currentPositon) {
+      dispatch(setUserLocation(currentPositon));
+    }
+  }, [currentPositon, dispatch]);
+
+  useEffect(() => {
+    if (currentPositon) {
+      dispatch(setCurrentDisplayed(currentPositon));
+    }
+  }, [currentPositon, dispatch]);
+
+  useEffect(() => {
+    if (currentPositon && !weather.weatherData) {
+      dispatch(getFullCityWeather(currentPositon));
+    }
+  }, [currentPositon, dispatch, weather.weatherData]);
 
   return (
     <div className='App'>

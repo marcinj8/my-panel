@@ -1,13 +1,17 @@
 import axios from 'axios';
+import { WeatherCityModel } from '../../shared/models/userModel';
 
 export const getLocation = (setLocation: Function) => {
   let saveLocationData = (locationData: any) => {
-    let location: any | null = null;
-    location = {
-      latitude: locationData.coords.latitude,
-      longitude: locationData.coords.longitude,
+    let position: WeatherCityModel | null = null;
+    position = {
+      name: 'Twoja lokalizacja',
+      location: {
+        latitude: locationData.coords.latitude,
+        longitude: locationData.coords.longitude,
+      },
     };
-    setLocation(location);
+    setLocation(position);
   };
   // const link = `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
   // const address = axios
@@ -32,7 +36,7 @@ export const getPlaceLocation: (place: string) => any = async (
     response = await axios.post(link);
     console.log(response);
   } catch (err) {
-    return [err, 'miejsce nie istnieje'];
+    return 'miejsce nie istnieje';
   }
 
   return response.data.results;

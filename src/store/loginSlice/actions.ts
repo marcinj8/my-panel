@@ -4,6 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { UserLoginDataModel } from '../../shared/models';
 
 import { loading, succes, error, logout } from './reducer';
+import { setWeatherCities } from '../userData/reducer';
 
 const config: AxiosRequestConfig = {
   headers: {
@@ -59,8 +60,10 @@ const sendRequest = (userData: UserLoginDataModel, mode: RegisterMode) => {
             res.data.tokenExpiration ||
             new Date().getTime() + tokenExpirationValidity,
         };
+        const weatherCities = res.data.weatherCities;
         localStorage.setItem('userData', JSON.stringify(user));
         console.log(res);
+        dispatch(setWeatherCities(weatherCities))
         return dispatch(succes(user));
       })
       .catch((err: AxiosError) => {

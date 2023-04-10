@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorModel } from '../../shared/models';
 import { RootState, StatusType } from '../store';
+import { CityDataModel } from '../userData/reducer';
 
 export interface CurrentWeatherDataModel {
   sunrise: number;
@@ -34,6 +35,8 @@ export interface WeatherDataModel {
 }
 
 export interface WeatherState {
+  currentDisplayed: CityDataModel | null;
+  currentLocationWeatherData: WeatherDataModel | null;
   weatherData: WeatherDataModel | null;
   status: StatusType;
   message: string | null;
@@ -41,6 +44,8 @@ export interface WeatherState {
 }
 
 const initialState: WeatherState = {
+  currentDisplayed: null,
+  currentLocationWeatherData: null,
   weatherData: null,
   status: 'init',
   message: null,
@@ -54,7 +59,7 @@ export const weatherSlice = createSlice({
     loading: (state) => {
       state.status = 'loading';
     },
-    succes: (state, action: PayloadAction<any>) => {
+    succes: (state, action: PayloadAction<WeatherDataModel>) => {
       state.status = 'success';
       state.weatherData = action.payload;
       state.dateFetchedData = new Date().getTime();
@@ -71,10 +76,15 @@ export const weatherSlice = createSlice({
       state.dateFetchedData = null;
       state.weatherData = null;
     },
+    setCurrentDisplayed: (state, action: PayloadAction<CityDataModel>) => {
+      state.currentDisplayed = action.payload;
+      state.weatherData = null;
+    },
   },
 });
 
-export const { succes, loading, error } = weatherSlice.actions;
+export const { succes, loading, error, setCurrentDisplayed } =
+  weatherSlice.actions;
 
 export const user = (state: RootState) => state.weatherSlice;
 

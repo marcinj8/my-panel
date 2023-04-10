@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
 import { getLocation } from '../data/locationData';
+import { CityDataModel } from '../../store/userData/reducer';
 
 export const Location = () => {
-  const [location, setLocation] = useState<null | {
-    longitude: number;
-    latitude: number;
-  }>(null);
+  const [position, setPosition] = useState<null | CityDataModel>(null);
 
   useEffect(() => {
-    if (!location) {
-      getLocation(setLocation);
+    if (!position) {
+      getLocation(setPosition);
     }
-  }, [location]);
+  }, [position]);
 
   // console.log(weather.current);
 
   return (
     <div>
-      {location ? (
+      {position ? (
         <div>
           <div>
-            Lat: {Math.round(location.latitude * 100) / 100}{' '}
-            {location.latitude > 0 ? 'N' : 'S'}
+            Lat: {Math.round(position.location.latitude * 100) / 100}{' '}
+            {position.location.latitude > 0 ? 'N' : 'S'}
           </div>
           <div>
-            Lon: {Math.round(location.longitude * 100) / 100}{' '}
-            {location.latitude > 0 ? 'W' : 'E'}
+            Lon: {Math.round(position.location.longitude * 100) / 100}{' '}
+            {position.location.latitude > 0 ? 'W' : 'E'}
           </div>
         </div>
       ) : (

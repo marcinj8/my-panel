@@ -10,6 +10,7 @@ export const StyledAsyncView = Styled.div`
     background: rgba(0,0,139,.9);
     border: 1px solid white;
     border-radius: 4px;
+    z-index: 100000
 `;
 
 export const StyledBackdorp = Styled.div`

@@ -5,6 +5,7 @@ import { themes } from '../../shared/themes/themes';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { chageTheme } from '../../store/themeSlice/actions';
 import { CurrentThemeType, setTheme } from '../../store/themeSlice/reducer';
+import { CitiesListMenager } from '../../weather/components/citiesListMenager';
 
 export const SettingsPageView = () => {
   const themeSlice = useAppSelector((state) => state.themeData);
@@ -44,7 +45,8 @@ export const SettingsPageView = () => {
         >
           {options}
         </StyledSelect>
-        <h3> Edytuj listę maist - pogoda</h3>
+        <h3>pogoda</h3>
+        <CitiesListMenager listOn/>
       </>
     </HocSection>
   );

@@ -8,6 +8,11 @@ interface Location {
   longitude: number;
 }
 
+export interface CityDataModel {
+  name: string;
+  location: Location;
+}
+
 export type PurchaseListType = 'private' | 'home';
 
 interface PurchaseList {
@@ -20,11 +25,13 @@ interface PurchaseList {
 
 export interface UserDataState {
   [key: string]: any;
-  status: StatusType
+  status: StatusType;
   message: string | null;
-  location: null | Location;
+  location: null | CityDataModel;
   privatePurchaseLists: null | PurchaseList;
   homePurchaseLists: null | PurchaseList;
+  currency: [] | null;
+  weatherCities: CityDataModel[] | null;
 }
 
 const initialState: UserDataState = {
@@ -33,6 +40,8 @@ const initialState: UserDataState = {
   homePurchaseLists: null,
   status: 'init',
   message: null,
+  currency: null,
+  weatherCities: null,
 };
 
 const updateItem = (
@@ -119,9 +128,25 @@ export const userDataSlice = createSlice({
     },
     setUserLocation: (
       state: UserDataState,
-      action: PayloadAction<Location>
+      action: PayloadAction<CityDataModel>
     ) => {
       state.location = action.payload;
+    },
+    setWeatherCities: (
+      state: UserDataState,
+      action: PayloadAction<CityDataModel[]>
+    ) => {
+      state.weatherCities = action.payload;
+    },
+    addCity: (state: UserDataState, action: PayloadAction<CityDataModel>) => {
+      const weatherCitiesUpdated = state.weatherCities
+        ? [...state.weatherCities]
+        : [];
+      weatherCitiesUpdated.push(action.payload);
+      return {
+        ...state,
+        weatherCities: weatherCitiesUpdated,
+      };
     },
   },
 });
@@ -133,6 +158,8 @@ export const {
   setPurchaseList,
   error,
   setInit,
+  setWeatherCities,
+  addCity,
 } = userDataSlice.actions;
 
 export const user = (state: RootState) => state.themeData;
