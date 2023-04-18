@@ -17,10 +17,12 @@ export const StyledCityListItem = styled.li<{ isActive: boolean }>`
   border-radius: 5px;
   list-style: none;
   width: 350px;
+  padding: 5px;
   margin: 8px auto;
 `;
 
-export const StyledCityName = styled.div`
+export const StyledCityName = styled.h4`
   width: 200px;
+  height: 100%;
   display: inline-block;
 `;

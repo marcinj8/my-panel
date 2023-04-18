@@ -10,6 +10,7 @@ interface Location {
 
 export interface CityDataModel {
   name: string;
+  id: string;
   location: Location;
 }
 
@@ -148,6 +149,15 @@ export const userDataSlice = createSlice({
         weatherCities: weatherCitiesUpdated,
       };
     },
+    updateCityList: (
+      state: UserDataState,
+      action: PayloadAction<CityDataModel[]>
+    ) => {
+      return {
+        ...state,
+        weatherCities: action.payload,
+      };
+    },
   },
 });
 
@@ -159,7 +169,7 @@ export const {
   error,
   setInit,
   setWeatherCities,
-  addCity,
+  addCity,updateCityList
 } = userDataSlice.actions;
 
 export const user = (state: RootState) => state.themeData;

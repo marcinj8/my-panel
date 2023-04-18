@@ -5,6 +5,7 @@ export const getLocation = (setLocation: Function) => {
   let saveLocationData = (locationData: any) => {
     let position: WeatherCityModel | null = null;
     position = {
+      id: 'yourlocation',
       name: 'Twoja lokalizacja',
       location: {
         latitude: locationData.coords.latitude,

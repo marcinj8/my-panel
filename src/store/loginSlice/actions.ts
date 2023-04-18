@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { UserLoginDataModel } from '../../shared/models';
@@ -15,6 +15,46 @@ const config: AxiosRequestConfig = {
 
 const tokenExpirationValidity = 86400000;
 
+export const quickLoginUser = (token: string) => {
+  return async (dispatch: any) => {
+    const config2: AxiosRequestConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    dispatch(loading());
+    const link = `${process.env.REACT_APP_BACKEND_URL}/user/quick-login`;
+
+    axios
+      .get(link, config2)
+      .then((res: AxiosResponse) => {
+        const user = {
+          id: res.data.id,
+          email: res.data.email,
+          name: res.data.name,
+          homeId: res.data.homeId,
+          token: res.data.token,
+          tokenExpiration:
+            res.data.tokenExpiration ||
+            new Date().getTime() + tokenExpirationValidity,
+        };
+        const weatherCities = res.data.weatherCities;
+
+        localStorage.setItem('userData', JSON.stringify(user));
+
+        dispatch(setWeatherCities(weatherCities));
+        return dispatch(succes(user));
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+        return dispatch(error({ code: 404 }));
+      });
+  };
+};
+
 export const checkIsLoggedin = (dispatch: Function) => {
   const curretTime = new Date().getTime();
   const storedUserData = localStorage.getItem('userData');
@@ -27,9 +67,8 @@ export const checkIsLoggedin = (dispatch: Function) => {
       userData.token &&
       curretTime - userData.tokenExpiration < tokenExpirationValidity
     ) {
-      return dispatch(succes(userData));
+      return dispatch(quickLoginUser(userData.token));
     }
-    console.log(userData);
   } else {
     return dispatch(logout());
   }
@@ -49,7 +88,7 @@ const sendRequest = (userData: UserLoginDataModel, mode: RegisterMode) => {
 
     axios
       .post(link, { userData: JSON.stringify(userData) }, config)
-      .then((res: AxiosRequestConfig) => {
+      .then((res: AxiosResponse) => {
         const user = {
           id: res.data.id,
           email: res.data.email,
@@ -63,7 +102,7 @@ const sendRequest = (userData: UserLoginDataModel, mode: RegisterMode) => {
         const weatherCities = res.data.weatherCities;
         localStorage.setItem('userData', JSON.stringify(user));
         console.log(res);
-        dispatch(setWeatherCities(weatherCities))
+        dispatch(setWeatherCities(weatherCities));
         return dispatch(succes(user));
       })
       .catch((err: AxiosError) => {

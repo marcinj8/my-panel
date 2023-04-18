@@ -8,7 +8,6 @@ const getData = (link: string) => {
     axios
       .get(link)
       .then((res) => {
-        console.log(res);
         dispatch(succes(res.data));
       })
       .catch((err) => {

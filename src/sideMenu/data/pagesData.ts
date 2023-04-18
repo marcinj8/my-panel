@@ -4,7 +4,7 @@ export const pagesData = [
   { link: '/weather', name: 'pogoda' },
   { link: '/to-do', name: 'to do' },
   { link: '/purchase-lists', name: 'zakupy' },
+  { link: '/recipes', name: 'przepisy' },
   { link: '/currency', name: 'waluty' },
   { link: '/finances', name: 'finanse' },
-  { link: '/recipes', name: 'przepisy' },
 ];

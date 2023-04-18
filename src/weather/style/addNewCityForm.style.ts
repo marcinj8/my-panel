@@ -26,3 +26,8 @@ export const StyledCitiesResultListItem = styled.li`
     border: 1px solid black;
   }
 `;
+
+export const StyledPlaceExistTitle = styled.h2`
+  color: ${({ theme }) => theme.color.main};
+  margin: 80px auto;
+`;

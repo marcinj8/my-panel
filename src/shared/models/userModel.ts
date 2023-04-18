@@ -1,5 +1,6 @@
 export interface WeatherCityModel {
   name: string;
+  id: string;
   location: {
     latitude: number;
     longitude: number;

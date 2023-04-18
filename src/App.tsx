@@ -65,28 +65,28 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!currentPositon) {
+    if (!currentPositon && isLoggedin !== null) {
       getLocation(setCurrentPositon);
     }
-  }, [currentPositon]);
+  }, [currentPositon, isLoggedin]);
 
   useEffect(() => {
-    if (currentPositon) {
+    if (currentPositon && isLoggedin !== null) {
       dispatch(setUserLocation(currentPositon));
     }
-  }, [currentPositon, dispatch]);
+  }, [currentPositon, dispatch, isLoggedin]);
 
   useEffect(() => {
-    if (currentPositon) {
+    if (currentPositon && isLoggedin !== null) {
       dispatch(setCurrentDisplayed(currentPositon));
     }
-  }, [currentPositon, dispatch]);
+  }, [currentPositon, dispatch, isLoggedin]);
 
   useEffect(() => {
-    if (currentPositon && !weather.weatherData) {
+    if (currentPositon && !weather.weatherData && isLoggedin !== null) {
       dispatch(getFullCityWeather(currentPositon));
     }
-  }, [currentPositon, dispatch, weather.weatherData]);
+  }, [currentPositon, dispatch, weather.weatherData, isLoggedin]);
 
   return (
     <div className='App'>
