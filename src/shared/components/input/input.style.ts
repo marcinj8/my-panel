@@ -12,8 +12,8 @@ export const StyledInputLabel = styled.label`
   color: ${({ theme }) => theme.color.main};
 `;
 
-export const StyledInput = styled.input`
-  width: 200px;
+export const StyledInput = styled.input<{ width?: string }>`
+  width: ${({ width }) => (width ? width : '200px')};
   padding: 5px;
   margin: 5px auto;
   box-shadow: 1px 2px 3px black;

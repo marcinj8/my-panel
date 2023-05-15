@@ -73,7 +73,13 @@ export const AddNewCityForm: React.FC<{ onCloseForm: Function }> = ({
 
   return multipleResponse === null ? (
     <form style={{ padding: '25px' }}>
-      <Modal show={placeExist} onCancel={() => setPlaceExist(false)}>
+      <Modal
+        show={placeExist}
+        onCancel={() => {
+          setPlaceExist(false);
+          onCloseForm();
+        }}
+      >
         <StyledPlaceExistTitle>Miejsce jest już dodane!</StyledPlaceExistTitle>
       </Modal>
       <AsyncView

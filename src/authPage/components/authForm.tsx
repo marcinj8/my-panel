@@ -13,7 +13,6 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
 } from '../../shared/components/input/validators';
-import { UserLoginDataModel } from '../../shared/models';
 
 interface AuthFromData {
   isLoginMode: boolean;

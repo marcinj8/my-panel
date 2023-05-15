@@ -1,9 +1,10 @@
 import Styled from 'styled-components';
 
 export const StyledCurrentWeather = Styled.section`
+    position: relative; 
     width: 95%;
     margin: 0 auto;
-    padding: 45px 10px;
+    padding: 45px 10px 20px 10px;
     display: flex;
     div{
         width: 50%;
@@ -25,7 +26,10 @@ export const StyledCurrentWeatherData = Styled.div`
 `;
 
 export const StyledCurrentWeatherImg = Styled.img`
-    text-align: right;
-    heigth: 200px;
-    width: 200px;
+    position: relative;
+    heigth: 150px;
+    width: 150px;
+    @media (min-width: ${(props) => props.theme.devices.tablet}) {
+        top:-20px;
+    }
 `;

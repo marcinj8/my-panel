@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { UserLoginDataModel } from '../../shared/models';
 
 import { loading, succes, error, logout } from './reducer';
-import { setWeatherCities } from '../userData/reducer';
+import { setRecipes, setWeatherCities } from '../userData/reducer';
 
 const config: AxiosRequestConfig = {
   headers: {
@@ -17,19 +17,13 @@ const tokenExpirationValidity = 86400000;
 
 export const quickLoginUser = (token: string) => {
   return async (dispatch: any) => {
-    const config2: AxiosRequestConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     dispatch(loading());
     const link = `${process.env.REACT_APP_BACKEND_URL}/user/quick-login`;
-
+    const configQuiclLogin = {
+      headers: { ...config.headers, Authorization: `Bearer ${token}` },
+    };
     axios
-      .get(link, config2)
+      .get(link, configQuiclLogin)
       .then((res: AxiosResponse) => {
         const user = {
           id: res.data.id,
@@ -42,10 +36,12 @@ export const quickLoginUser = (token: string) => {
             new Date().getTime() + tokenExpirationValidity,
         };
         const weatherCities = res.data.weatherCities;
+        const recipes = res.data.recipes;
 
         localStorage.setItem('userData', JSON.stringify(user));
 
         dispatch(setWeatherCities(weatherCities));
+        dispatch(setRecipes(recipes));
         return dispatch(succes(user));
       })
       .catch((err: AxiosError) => {
@@ -106,7 +102,7 @@ const sendRequest = (userData: UserLoginDataModel, mode: RegisterMode) => {
         return dispatch(succes(user));
       })
       .catch((err: AxiosError) => {
-        return dispatch(error({ code: 404 }));
+        return dispatch(error({ message: err.message, code: 404 }));
       });
   };
 };

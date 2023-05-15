@@ -15,7 +15,8 @@ export interface UserLoginDataModel {
   email: string;
   token: string;
   tokenExpiration: number;
+  weatherCities: WeatherCityModel[];
+  recipes: any[];
   password?: string;
-  weatherCities?: WeatherCityModel[];
   currency?: string[];
 }

@@ -14,6 +14,25 @@ export interface CityDataModel {
   location: Location;
 }
 
+export interface RecipeIngredientModel {
+  [key: string]: any;
+  id: string;
+  name: string;
+  quantity: number;
+  unit: string;
+  onPurchaseList: boolean;
+  available: boolean;
+  description?: string;
+}
+
+export interface RecipeDataModel {
+  id: string;
+  name: string;
+  ingredients: RecipeIngredientModel[];
+  instructions: string;
+  links: string[];
+}
+
 export type PurchaseListType = 'private' | 'home';
 
 interface PurchaseList {
@@ -33,6 +52,7 @@ export interface UserDataState {
   homePurchaseLists: null | PurchaseList;
   currency: [] | null;
   weatherCities: CityDataModel[] | null;
+  recipes: RecipeDataModel[] | null;
 }
 
 const initialState: UserDataState = {
@@ -43,6 +63,7 @@ const initialState: UserDataState = {
   message: null,
   currency: null,
   weatherCities: null,
+  recipes: null,
 };
 
 const updateItem = (
@@ -158,6 +179,12 @@ export const userDataSlice = createSlice({
         weatherCities: action.payload,
       };
     },
+    setRecipes: (
+      state: UserDataState,
+      action: PayloadAction<RecipeDataModel[]>
+    ) => {
+      state.recipes = action.payload;
+    },
   },
 });
 
@@ -169,7 +196,9 @@ export const {
   error,
   setInit,
   setWeatherCities,
-  addCity,updateCityList
+  addCity,
+  updateCityList,
+  setRecipes,
 } = userDataSlice.actions;
 
 export const user = (state: RootState) => state.themeData;

@@ -6,6 +6,7 @@ import {
   StyledHourlyForecastDate,
   StyledHourlyForecastTemp,
 } from '../style/hourlyWeatherForecast.style';
+import { StyledCurrentWeatherImg } from '../style/currentWeather.style';
 
 export const HourlyForecastWeather: React.FC<{ hourlyForecast: any[] }> = ({
   hourlyForecast,
@@ -23,6 +24,10 @@ export const HourlyForecastWeather: React.FC<{ hourlyForecast: any[] }> = ({
               ? 'jutro'
               : hour + ':00'}
           </StyledHourlyForecastDate>
+          <img
+            src={`https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`}
+            alt={forecast.weather[0].description}
+          />
           <StyledHourlyForecastTemp>
             {Math.round(forecast.temp)}°
           </StyledHourlyForecastTemp>

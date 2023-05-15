@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorModel, UserLoginDataModel } from '../../shared/models';
 import { RootState, StatusType } from '../store';
 
+type UserlLoginSliceData = Omit<UserLoginDataModel, 'recipes' | 'weatherCities'>
+
 export interface UserState {
-  userData: UserLoginDataModel | null;
+  userData: UserlLoginSliceData | null;
   status: StatusType;
   message: string | null;
 }
@@ -14,6 +16,7 @@ const initialState: UserState = {
   message: null,
 };
 
+
 export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
@@ -21,7 +24,7 @@ export const userDataSlice = createSlice({
     loading: (state) => {
       state.status = 'loading';
     },
-    succes: (state, action: PayloadAction<UserLoginDataModel>) => {
+    succes: (state, action: PayloadAction<UserlLoginSliceData>) => {
       state.status = 'success';
       state.userData = action.payload;
     },

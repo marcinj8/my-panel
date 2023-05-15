@@ -10,6 +10,7 @@ import { Auth } from './authPage';
 import { PurchaseList } from './purchaseList';
 import { Weather } from './weather/view/weather';
 import { SettingsPageView } from './settingsPage';
+import { Recipes } from './recipes';
 
 import { checkIsLoggedin } from './store/loginSlice/actions';
 
@@ -42,6 +43,7 @@ function App() {
             <Route path='/weather' element={<Weather />} />
             <Route path='/purchase-lists' element={<PurchaseList />} />
             <Route path='/settings' element={<SettingsPageView />} />
+            <Route path='/recipes' element={<Recipes />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
         </>

@@ -14,6 +14,7 @@ interface InputProps {
   type?: string;
   validators?: Validator[];
   placeholder?: string;
+  style?: { width?: string };
   label?: string;
   isValid?: boolean;
   flexDirection?: FlexDirection;
@@ -29,6 +30,7 @@ export const Input: React.FC<InputProps> = ({
   isValid,
   validators = [],
   flexDirection = 'column',
+  style,
 }) => {
   const { inputState, onInputChange, onInputTouch } = UseInput(value, isValid);
 
@@ -40,6 +42,7 @@ export const Input: React.FC<InputProps> = ({
     <StyledInputBox flexDirection={flexDirection}>
       {label && <StyledInputLabel>{label}</StyledInputLabel>}
       <StyledInput
+        style={style}
         value={inputState.value}
         placeholder={placeholder}
         type={type}

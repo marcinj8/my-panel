@@ -23,7 +23,7 @@ export const CitiesList: React.FC<ItemsListModel> = ({ list, title }) => {
   const dispatch = useAppDispatch();
 
   const formattedList = useMemo(() => {
-    if (list === null) {
+    if (!Array.isArray(list)) {
       return [];
     } else {
       return list.map((city: CityDataModel) => (
