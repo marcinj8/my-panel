@@ -26,11 +26,13 @@ export interface RecipeIngredientModel {
 }
 
 export interface RecipeDataModel {
+  [key: string]: any;
   id: string;
   name: string;
   ingredients: RecipeIngredientModel[];
-  instructions: string;
+  instructions: string[];
   links: string[];
+  tags: string[];
 }
 
 export type PurchaseListType = 'private' | 'home';
@@ -185,6 +187,17 @@ export const userDataSlice = createSlice({
     ) => {
       state.recipes = action.payload;
     },
+    addRecipe: (
+      state: UserDataState,
+      action: PayloadAction<RecipeDataModel>
+    ) => {
+      const updatedRecipes = state.recipes;
+      updatedRecipes?.push(action.payload);
+      return {
+        ...state,
+        recipes: updatedRecipes,
+      };
+    },
   },
 });
 
@@ -199,6 +212,7 @@ export const {
   addCity,
   updateCityList,
   setRecipes,
+  addRecipe,
 } = userDataSlice.actions;
 
 export const user = (state: RootState) => state.themeData;

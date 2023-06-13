@@ -1,4 +1,6 @@
+import { Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+
 import { PurchaseListItemModel } from '../../purchaseList/data/purchaseListData';
 
 import {
@@ -9,6 +11,8 @@ import {
   CityDataModel,
   addCity,
   updateCityList,
+  RecipeDataModel,
+  addRecipe,
 } from './reducer';
 
 export const fetchPurchaseList = (
@@ -45,7 +49,7 @@ export const updateListItem = (
   return async (dispatch: any) => {
     dispatch(loading());
     const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists`;
-    axios.put(link, {});
+    axios.put(link, {});//to update
   };
 };
 
@@ -55,6 +59,7 @@ export const addNewCityWeather = (
 ) => {
   return async (dispatch: any) => {
     dispatch(loading());
+
     const link = `${process.env.REACT_APP_BACKEND_URL}/user/weather-cities/add`;
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -73,6 +78,7 @@ export const addNewCityWeather = (
 export const deleteCityWeather = (id: string, token: string) => {
   return async (dispatch: any) => {
     dispatch(loading());
+
     let updatedCitiesList: CityDataModel[];
     const link = `${process.env.REACT_APP_BACKEND_URL}/user/weather-cities/delete/${id}`;
     const config = {
@@ -85,6 +91,26 @@ export const deleteCityWeather = (id: string, token: string) => {
         updatedCitiesList = JSON.parse(res.data.citiesList);
         console.log(updatedCitiesList);
         return dispatch(updateCityList(updatedCitiesList));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const addNewRecipe = (newRecipe: RecipeDataModel, token: string) => {
+    console.log('preparing')
+    return async (dispatch: any) => {
+    dispatch(loading());
+
+    const link = `${process.env.REACT_APP_BACKEND_URL}/recipes/add`;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    console.log('sending')
+    axios
+      .post(link, { newRecipe: JSON.stringify(newRecipe) }, config)
+      .then((res) => {
+        console.log(res);
+        return dispatch(addRecipe);
       })
       .catch((err) => console.log(err));
   };

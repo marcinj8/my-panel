@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { UseInput } from './inputData';
 
-import { StyledInput, StyledInputBox, StyledInputLabel } from './input.style';
+import {
+  StyledInput,
+  StyledInputBox,
+  StyledInputLabel,
+  StyledInputTextArea,
+} from './input.style';
+
 import { Validator } from './validators';
 
 type FlexDirection = 'row' | 'column';
@@ -11,6 +17,7 @@ interface InputProps {
   value: string | number;
   name: string;
   onInput: Function;
+  variant?: 'input' | 'textarea';
   type?: string;
   validators?: Validator[];
   placeholder?: string;
@@ -24,6 +31,7 @@ export const Input: React.FC<InputProps> = ({
   value,
   name,
   onInput,
+  variant = 'input',
   type = 'text',
   label = null,
   placeholder,
@@ -34,6 +42,17 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   const { inputState, onInputChange, onInputTouch } = UseInput(value, isValid);
 
+  const Component:React.ElementType = useMemo(() => {
+    switch (variant) {
+      case 'input':
+        return StyledInput;
+      case 'textarea':
+        return StyledInputTextArea;
+      default:
+        return StyledInput;
+    }
+  }, [variant]);
+
   useEffect(() => {
     onInput(name, inputState.value, inputState.isValid);
   }, [name, inputState.value, inputState.isValid, onInput]);
@@ -41,12 +60,15 @@ export const Input: React.FC<InputProps> = ({
   return (
     <StyledInputBox flexDirection={flexDirection}>
       {label && <StyledInputLabel>{label}</StyledInputLabel>}
-      <StyledInput
+      <Component
         style={style}
+        // update value - test
+        // value={value}
+        // koniec
         value={inputState.value}
         placeholder={placeholder}
         type={type}
-        onChange={(e) => onInputChange(e, validators)}
+        onChange={(e: any) => onInputChange(e, validators)}
         onBlur={onInputTouch}
       />
     </StyledInputBox>

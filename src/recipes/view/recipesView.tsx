@@ -11,8 +11,10 @@ export const Recipes = () => {
         <header>
           <h3>Przepisy</h3>
         </header>
-        <RecipeList />
-        <AddNewRecipeForm />
+        <div style={{  position: 'relative' }}>
+          {/* <RecipeList /> */}
+          <AddNewRecipeForm />
+        </div>
       </>
     </HocSection>
   );

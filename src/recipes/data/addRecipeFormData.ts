@@ -60,3 +60,25 @@ export const onDeletePosition = (
       setIsIngredientValid(isValid);
     });
   };
+
+
+
+  export const onIngredientUpdate = (
+    ingredient: RecipeIngredientModel,
+    id: string,
+    isValid: boolean,
+    ingredientsData: RecipeIngredientModel[],
+    setIngredientsData: Function
+  ) => {
+    const updatedIngredientsData =
+      ingredientsData !== null ? [...ingredientsData] : [];
+    if (isValid) {
+      const index = updatedIngredientsData.findIndex((item) => item.id === id);
+      if (index < 0) {
+        console.log('coś sie zjebało');
+        return;
+      }
+      updatedIngredientsData[index] = ingredient;
+      setIngredientsData(updatedIngredientsData);
+    }
+  };
