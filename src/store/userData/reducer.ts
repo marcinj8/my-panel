@@ -191,8 +191,9 @@ export const userDataSlice = createSlice({
       state: UserDataState,
       action: PayloadAction<RecipeDataModel>
     ) => {
-      const updatedRecipes = state.recipes;
+      const updatedRecipes = state.recipes !== null ? [...state.recipes] : [];
       updatedRecipes?.push(action.payload);
+      console.log(updatedRecipes);
       return {
         ...state,
         recipes: updatedRecipes,

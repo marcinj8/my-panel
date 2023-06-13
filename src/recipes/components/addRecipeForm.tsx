@@ -25,7 +25,9 @@ import { RecipeView } from './recipeView';
 import { addNewRecipe } from '../../store/userData/actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-export const AddNewRecipeForm = () => {
+export const AddNewRecipeForm: React.FC<{ setIsAddingNewRecipe: Function }> = ({
+  setIsAddingNewRecipe,
+}) => {
   const [localStatus, setLocalStatus] = useState<StatusType>('init');
   const [ingredientsData, setIngredientsData] = useState<
     RecipeIngredientModel[]
@@ -94,6 +96,14 @@ export const AddNewRecipeForm = () => {
     setNewRecipe(newRecipe);
   };
 
+  const onSendRecipe = () => {
+    if (!newRecipe) {
+      return;
+    }
+    setIsAddingNewRecipe(false);
+    dispatch(addNewRecipe(newRecipe, userData?.token));
+  };
+
   useEffect(() => {
     if (!ingredientsData.length) {
       onAddPositoin(ingredientsData, setIngredientsData);
@@ -111,7 +121,7 @@ export const AddNewRecipeForm = () => {
         <RecipeView
           onCancel={() => setNewRecipe(null)}
           recipe={newRecipe}
-          onConfirm={() => dispatch(addNewRecipe(newRecipe, userData?.token))}
+          onConfirm={onSendRecipe}
         />
       )}
       <form

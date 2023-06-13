@@ -49,7 +49,7 @@ export const updateListItem = (
   return async (dispatch: any) => {
     dispatch(loading());
     const link = `${process.env.REACT_APP_BACKEND_URL}/purchase-list/${listType}-lists`;
-    axios.put(link, {});//to update
+    axios.put(link, {}); //to update
   };
 };
 
@@ -97,20 +97,19 @@ export const deleteCityWeather = (id: string, token: string) => {
 };
 
 export const addNewRecipe = (newRecipe: RecipeDataModel, token: string) => {
-    console.log('preparing')
-    return async (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(loading());
 
     const link = `${process.env.REACT_APP_BACKEND_URL}/recipes/add`;
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log('sending')
+
     axios
       .post(link, { newRecipe: JSON.stringify(newRecipe) }, config)
       .then((res) => {
         console.log(res);
-        return dispatch(addRecipe);
+        return dispatch(addRecipe(newRecipe));
       })
       .catch((err) => console.log(err));
   };
